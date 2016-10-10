@@ -1,0 +1,26 @@
+// ASSUME PROGRAM STOPS WHEN ALL BLOCKS ARE GRAY
+// we also want to use && to combine things (but it wasn’t necessary in this program)
+// our key words are “free” and “blocked” (which also wasn’t necessary in the empty room)
+// comments will not actually be implemented
+
+while (free W) {
+	move L
+}
+
+while (free N) {
+	move N
+}
+
+while (free E) {
+	while (free S) {
+		move S
+	}
+
+	move E
+
+	while (free N) {
+		move N
+	}
+
+	move E
+}
