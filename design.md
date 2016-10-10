@@ -5,8 +5,6 @@
 Anna and I are designing this language for users who have had the equivalent of CS51/CS5/AP CS. We are assuming some knowledge of an object oriented language.
 
 
-
-
 ### Why did you choose this design, i.e., why did you think it would be a good idea for users to express the maze-searching computation using this syntax?
 
 First, we will explain the current design. Then, we will explain our observations about what we like and dislike about the current design, and what we'd like to change.
@@ -117,11 +115,21 @@ THEN, we realized that the condition and the movement do not necessarily involve
 
 ## What behaviors are easier to express in your design than in Picobot’s original design?  If there are no such behaviors, why not?
 
++ Instead of using an arrow, we just use a colon, which we think declutters our code a bit.
++ The flow (which states to go to and when) is more intuitive in our language; instead of navigating to numbered states and checking all the conditions of a certain numbered state until the condition is true, we use an asterisk to describe when you reevaluate a condition and no asterisk to move on to check the next sequential command. 
 
-We didn't really like the usage of the wildcard. Our idea is to say (
 
 ## What behaviors are more difficult to express in your design than in Picobot’s original design? If there are no such behaviors, why not?
 
++ We think that the way the original language expresses whether a block to the N, E, W, or S is 1) free, 2) occupied, or 3) either is more concise and easier to parse. However, we're clustering all the "free" blocks together with (), and all the "occupied" blocks together with [], and not mentioning blocks that can be either. Our method requires the user to type more characters, but we think our organization is more clear than that of the original language. 
+
 ## On a scale of 1–10 (where 10 is “very different”), how different is your syntax from PicoBot’s original design?
 
++ We would say 7! Changing states is more "implicit"; instead of specifying which state to navigate next to, you can assume that you go to the next state, unless there is a number (negative or positive sign followed by an integer) that tells you to go check another condition. 
++ The original language uses an arrow, but we use a colon.
++ The original language labels the state of each condition, but we don't explicitly number each condition. 
++ The original language requires the user to explicitly state the condition (free, occupied, or either) of each directional letter. However, our language just assumes that if the user does not place a directional letter in () or [], that it is equivalent to using the * to represent the letter.
+
+
 ## Is there anything you would improve about your design?
++ We would like to figure out a way to simplify the part where check the condition of each directional letter -- using () [] looks messy and verbose. 
