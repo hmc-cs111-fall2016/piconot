@@ -28,17 +28,17 @@ We found the states and the use of X as a MoveDirection less immediately intuiti
 We went through several ideas: 
 
 1. Our first idea is to have a series of while loops. For example:
-..* while (**x*) {W}
-..* while (**w*) {S}
-..* while (*EWX) {N}
++ while (**x*) {W}
++ while (**w*) {S}
++ while (*EWX) {N}
 
 While the first bullet point is true, go W. When it's not true, check if the second bullet point is true. If it is true, then go S, but if it is not true, check the third bullet point, and if it is true, go N until the condition is no longer met. 
 However, we didn't like using **** as a representation for whether a block was occupied or not occupied.
 
 2. Our second idea was to write:
-⋅⋅* while (!W) {W}
-⋅⋅* while (W) {S}
-⋅⋅* while (E, W, !S) {N}
++ while (!W) {W}
++ while (W) {S}
++ while (E, W, !S) {N}
 We liked this, but also wanted to move even further away from the existing language. We also wanted to take out { } if they are unnecesssary.
 
 3. Our third idea was to move away from letters and use arrows. 
