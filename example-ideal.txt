@@ -1,0 +1,17 @@
+Label start:
+    Face west
+    Go until wall
+    face North
+    go until wall
+    jump to loop
+
+Label loop:
+    face South
+    go until wall
+    face East
+    go until right-wall    
+    face North
+    go until wall
+    face East
+    go until left-wall
+    jump to loop
