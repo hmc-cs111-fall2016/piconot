@@ -70,6 +70,46 @@ This means that once you finish executing |N|:N*, you move three steps ahead. Ho
 ⋅⋅* in this line: |N|:N* +3 , why do we want |N| to necessarily mean that it's free? What if we did (N) to mean the condition in which the block to the north is free, and [N] to mean the condition in which the block to the north is not free?
 ⋅⋅* do we even need the asterisk? If our goal is to check the statement to the left of the colon is true, and if so, execute the statement to the right of the colon, doesn't our check operate as a "while"???? 
 
+6. Final version of the language!! 
+
+..* Command line 1: (W):W* 
+..* Command line 2: (N):N*
+..* Command line 3: (S):S* 
+..* Command line 4: [S]:E
+..* Command line 5: (N):N*
+..* Command line 6: [N]:E -3
+
+Explanation: * means you execute the command line again and see if the while condition holds. no * means that you check the while condition of the next line. When the condition for a line is not met, or when you are not supposed to check the command line again, you automatically move on to the next line. 
+
+Line-by-line run through of this code:
+..* While you "can go W", go W. * means you keep checking command line 1, until the condition, "can go W", is no longer met.
+..* Then, go to command line 2. While "can go N", go N. * means you keep checking command line 2, until the condition, "can go N", is no longer met. 
+..* Then go to command line 3. While "can go S", go S. * means you keep checking command line 3, until the condition, "can go S", is no longer met. 
+..* Then go to command line 4. While "cannot go S", go E. Because there is no *, you do not evaluate this command line again. You immediately go to the next line.
+..* Then go to command line 5. While "can go N", go N. * means you keep checking command line 5, until the condition, "can go N", is no longer met. 
+..* Then go to command line 6. While "cannot go N", go E. Because there is no *, you do not evaluate this command line again. You immediately jump to command 6-3 = command line 3, and check if that condition is true. If it is, evaluate it, if not evaluate the next command line. 
+
+
+Then, we realized that the following two lines (among others) were redundant:
+..* Command line 3: (S):S* 
+..* Command line 4: [S]:E
+
+This essentially just means that if you can go S, keep going S. When you cannot go S anymore, go E once. So we rewrote the whole thing in a simpler way, because the condition and the movement seemed to involve the same letters. 
+> W*
+> N*
+> S*
+> E
+> N*
+> E -3
+
+
+THEN, we realized that the condition and the movement do not necessarily involved the same letters!!! hat we want the user to be able to check if the space the bot wants to move is free, before moving into that space. Maybe the user only wants to move W if W is free and if N is occupied. Then, the user would say: [N](W):W* . Now we have to think about the order in which occupied or free letters are represented. We want the user to group all the "free" letters first, in parentheses, and then all the "occupied" letters next, in square brackets. If there are no "free" letters, then you just state the occupied letters, and vice versa. All letters within () or [] are separated by commas, and the letters within () and [] can be expressed in any order. The following are examples of conditions:
++ (S)[N,E] means S is free, N and E are occupied, and W can be free or occupied. 
++ [N,E] means N and E are occupied, and S and W can be free or occupied. 
++ (S) means S is free, N, E, and W can be free or occupied. 
+
+
+
 
 
 
