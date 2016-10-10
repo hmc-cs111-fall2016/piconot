@@ -68,10 +68,10 @@ However, to address the problem that we can move from one command to the next co
 This means that once you finish executing |N|:N*, you move three steps ahead. However, do we want to specify +1? Or does the program automatically know to go to the next step if the current statement is no longer true?  
 
 # 5: We also thought about some other options: 
-⋅⋅* in this line: |N|:N* +3 , why do we want |N| to necessarily mean that it's free? What if we did (N) to mean the condition in which the block to the north is free, and [N] to mean the condition in which the block to the north is not free?
-⋅⋅* do we even need the asterisk? If our goal is to check the statement to the left of the colon is true, and if so, execute the statement to the right of the colon, doesn't our check operate as a "while"???? 
++ In this line: |N|:N* +3 , why do we want |N| to necessarily mean that it's free? What if we did (N) to mean the condition in which the block to the north is free, and [N] to mean the condition in which the block to the north is not free?
++ Do we even need the asterisk? If our goal is to check the statement to the left of the colon is true, and if so, execute the statement to the right of the colon, doesn't our check operate as a "while"???? 
 
-# 6: Idea #6: 
+# Idea #6: 
 
 + (W):W* 
 + (N):N*
@@ -103,7 +103,7 @@ This essentially just means that if you can go S, keep going S. When you cannot 
 +  N*
 +  E -3
 
-# 7: Idea #7: 
+# Idea #7: Final Idea!!!
 THEN, we realized that the condition and the movement do not necessarily involved the same letters!!! hat we want the user to be able to check if the space the bot wants to move is free, before moving into that space. Maybe the user only wants to move W if W is free and if N is occupied. Then, the user would say: [N](W):W* . Now we have to think about the order in which occupied or free letters are represented. We want the user to group all the "free" letters first, in parentheses, and then all the "occupied" letters next, in square brackets. If there are no "free" letters, then you just state the occupied letters, and vice versa. All letters within () or [] are separated by commas, and the letters within () and [] can be expressed in any order. The following are examples of conditions:
 
 + (S)[N,E] means S is free, N and E are occupied, and W can be free or occupied. 
