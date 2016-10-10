@@ -26,6 +26,7 @@ What we like about this design is that each command line is very organized, comp
 We found the states and the use of X as a MoveDirection less immediately intuitive. We wanted to write a programming language that involved more of the control flow structures that we would see in java, such as "if" and "while". We also think that the use of the * is unnecessary -- we would rather represent ' NXW* ' as ' N,!E,W ' thereby replacing the * with just an unspecified letter. 
 
 We went through several ideas: 
+
 1. Our first idea is to have a series of while loops. For example:
 ⋅⋅* while (**x*) {W}
 ⋅⋅* while (**w*) {S}
