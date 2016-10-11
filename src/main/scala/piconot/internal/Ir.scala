@@ -1,6 +1,5 @@
 package piconot.internal
 
-import scala.collection.mutable.Map
 import PiconotTypes._
 
 package object PiconotTypes {
@@ -10,18 +9,14 @@ package object PiconotTypes {
     /** a Rule is a non-empty list of Commands. */
     type Rule = List[Command]
 
-    /** a State is a sequence of rules, which will be tried in order until one
-      * succeeds.
-      */
-    type State = List[Rule]
-
     /**
       * a Program is a set of states, each of which is uniquely identified by a
       * state name.
       */
-    type Program = Map[StateName, State]
+    type Program = List[State]
 
 }
+
 
 /** a Command is a part of a rule (see grammar).
   * Commands can be used to move, change direction, or change state.
@@ -51,3 +46,6 @@ case class Face(val dir: Dir) extends Command
 
 /** a Goto command causes a state change to the given state */
 case class Goto(val state: StateName) extends Command
+
+/** a state is encoded with its name and list of rules */
+case class State(val name: StateName, val rules: List[Rule])
