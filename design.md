@@ -1,5 +1,35 @@
 # Design
 
+A grammar for our language:
+
+<program>    := <startstate> <startdir> <states>
+              | <startdir> <startstate> <states>
+
+<startstate> := startstate = <state_name>;
+<startdir>   := startdir = <absdir>;
+
+<states>     := <state> <states>
+              | <state>
+
+<state>      := state <state_name> { <rules> }
+
+<rules>      := <rule> <rules>
+              | <rule>
+
+<rule>       := move <dir>;
+              | move <dir>, <options>;
+              | <options>;
+
+<options>    := face <dir>
+              | face <dir>, <state_name>
+              | <state_name>
+
+<dir>        := <absdir> | <reldir>
+<absdir>     := north | south | east | west
+<reldir>     := left | right | forward | backward
+
+<state_name> := [a-zA-Z][a-zA-Z0-9_]*
+
 ## Who is the target for this design, e.g., are you assuming any knowledge on the part of the language users?
 
 The target of this design is similar to the target for the original Picobot.
