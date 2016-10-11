@@ -26,10 +26,10 @@ also good to have a chance to experience how to implement a language the right
 way, so you'll also implement your syntax as an external DSL.)
 
 ## Checklist
-  - [ ] [Sign up for teams][Teams]. You'll work in pairs for this assignment
-  - [ ] Design a new syntax for Picobot 
-     - [ ] Describe your design in `design.md`
-     - [ ] Before you implement the syntax, write the "empty room" program in
+  - [x] [Sign up for teams][Teams]. You'll work in pairs for this assignment
+  - [x] Design a new syntax for Picobot 
+     - [x] Describe your design in `design.md`
+     - [x] Before you implement the syntax, write the "empty room" program in
      `example-ideal.txt`
   - [ ] Implement your new syntax as an internal DSL
      - [ ] Add files, as needed, to implement your syntax
