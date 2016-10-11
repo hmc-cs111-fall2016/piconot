@@ -1,8 +1,8 @@
 # This is an example which uses relative directions (eg forward, right, etc.)
 # to solve the empty room:
 
-startstate=move_up
-startdir=north
+startstate=move_up;
+startdir=north;
 
 state move_up {
     move forward;
@@ -23,8 +23,8 @@ state move_left {
 # This is the same example, but using absolute directions (eg north, west,
 # etc.) Our language supports both methods of specifying directions.
 
-startstate=move_north
-startdir=north
+startstate=move_north;
+startdir=north;
 
 state move_north {
     move north;
