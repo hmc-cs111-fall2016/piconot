@@ -1,0 +1,43 @@
+# This is an example which uses relative directions (eg forward, right, etc.)
+# to solve the empty room:
+
+startstate=move_up
+startdir=north
+
+state move_up {
+    move forward;
+    move right, face backward, move_down;
+    face left, move_left;
+}
+
+state move_down {
+    move forward;
+    face backward, move_up;
+}
+
+state move_left {
+    move forward;
+    face left, move_down;
+}
+
+# This is the same example, but using absolute directions (eg north, west,
+# etc.) Our language supports both methods of specifying directions.
+
+startstate=move_north
+startdir=north
+
+state move_north {
+    move north;
+    move east, face south, move_south;
+    face west, move_west;
+}
+
+state move_south {
+    move south;
+    face north, move_north;
+}
+
+state move_west {
+    move west;
+    face south, move_south;
+}
