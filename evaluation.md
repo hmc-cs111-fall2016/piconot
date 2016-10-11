@@ -9,6 +9,9 @@ describe_ why _you made the change._
 
 1. Now you have to add a comma between the states and wrap the state definitions in `Program ( ... )`.
 
+1. Commas in a command have been replaced by tildes, because Scala will not let
+us define a method called `,`.
+
 **On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
 
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
