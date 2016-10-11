@@ -9,8 +9,33 @@ describe_ why _you made the change._
 
 1. Now you have to add a comma between the states and wrap the state definitions in `Program ( ... )`.
 
-1. Commas in a command have been replaced by tildes, because Scala will not let
-us define a method called `,`.
+1. Rules must be declared inside a `rule ( ... )` block. For example,
+```scala
+rule(move North, face East, "next_state")
+```
+
+1. We have to combine rules with `,` because `;` cannot be overloaded.
+
+1. Made directions start with an uppercase so that we can reuse abstract representations
+
+1. Require parentheses for all keywords, since we can make the infix operators, but we can't make them prefix functions.
+
+1. Curly braces replaced by parentheses, since you can only use them interchangeably if the method is a one-argument function (whereas ours is variadic)
+
+1. Now you must put everything inside a call to `runPiconot`, so the program will look like:
+
+```scala
+runPiconot(
+    startstate="myState",
+    startdir=North
+)
+(
+    state("myState")(
+        ...
+        )
+    ...
+)
+```
 
 **On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
 
