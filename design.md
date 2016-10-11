@@ -1,7 +1,7 @@
 # Design
 
 A grammar for our language:
-
+```
 <program>    := <startstate> <startdir> <states>
               | <startdir> <startstate> <states>
 
@@ -29,7 +29,7 @@ A grammar for our language:
 <reldir>     := left | right | forward | backward
 
 <state_name> := [a-zA-Z][a-zA-Z0-9_]*
-
+```
 ## Who is the target for this design, e.g., are you assuming any knowledge on the part of the language users?
 
 The target of this design is similar to the target for the original Picobot.
