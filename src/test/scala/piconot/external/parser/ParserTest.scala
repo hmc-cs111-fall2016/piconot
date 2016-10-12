@@ -3,7 +3,7 @@ package piconot.external
 import org.scalatest.FunSuite
 import org.scalatest.Matchers
 
-import Piconot._
+import PiconotSugar._
 
 class ParserSuite extends FunSuite with Matchers {
 

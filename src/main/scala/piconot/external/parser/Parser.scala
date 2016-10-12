@@ -3,6 +3,7 @@ package piconot.external
 import scala.util.parsing.combinator._
 import PiconotTypes._
 
+
 /** A recursive descent parser for the Piconot language. See design.md for
  *  the grammar.
  */
@@ -28,18 +29,18 @@ object PiconotParser extends JavaTokenParsers with PackratParsers with RegexPars
   // a rule consists of a list of commands
   val rule: Parser[Rule] =
     ( ("|" ~> "move" ~> dir <~ ",") ~ ("face" ~> dir <~ ",") ~ stateName
-        ^^ {case m~f~g => Piconot.rule(Move(m), Face(f), Goto(g))}
+        ^^ {case m~f~g => PiconotSugar.rule(Move(m), Face(f), Goto(g))}
 
       | ("|" ~> "move" ~> dir <~ ",") ~ ("face" ~> dir)
-        ^^ {case m~f => Piconot.rule(Move(m), Face(f))}
+        ^^ {case m~f => PiconotSugar.rule(Move(m), Face(f))}
       | ("|" ~> "move" ~> dir <~ ",") ~ stateName
-        ^^ {case m~g => Piconot.rule(Move(m), Goto(g))}
+        ^^ {case m~g => PiconotSugar.rule(Move(m), Goto(g))}
       | ("|" ~> "face" ~> dir <~ ",") ~ stateName
-        ^^ {case f~g => Piconot.rule(Face(f), Goto(g))}
+        ^^ {case f~g => PiconotSugar.rule(Face(f), Goto(g))}
 
-      | "|" ~> "move" ~> dir  ^^ {case d => Piconot.rule(Move(d))}
-      | "|" ~> "face" ~> dir  ^^ {case d => Piconot.rule(Face(d))}
-      | "|" ~> stateName      ^^ {case n => Piconot.rule(Goto(n))} )
+      | "|" ~> "move" ~> dir  ^^ {case d => PiconotSugar.rule(Move(d))}
+      | "|" ~> "face" ~> dir  ^^ {case d => PiconotSugar.rule(Face(d))}
+      | "|" ~> stateName      ^^ {case n => PiconotSugar.rule(Goto(n))} )
 
   val dir: Parser[Dir] =
     ( "north"       ^^ {_ => North}
