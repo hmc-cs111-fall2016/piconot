@@ -33,7 +33,16 @@ use.
 
 
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
-10. Once we realized that we had to make a method for the While loop, we started running into even more problems around how to give our While loop Rules. We realized that we have to make an internal representation to get to Prof Ben’s internal representation, which can then be run by the PicoBot API.
+10. Once we realized that we had to make a method for the While loop, we started running into 
+even more problems around how to give our While loop Rules. We realized that we have to make 
+an internal representation to get to Prof Ben’s internal representation, which can then be run 
+by the PicoBot API.
+
+NOTE: We couldn't do a right-hand program. First, we already used up our 4 hours. Second, 
+I think our language design makes it really hard to do the right-hand program, especially since 
+the sample solution is state-heavy and difficult to map out chronologically. If it were possible 
+to use while-loops for the right-hand program, we would need to implement more features (like 
+more nesting levels). "Ain't nobody got time for that" ~Tiff
 
 ## External DSL
 
