@@ -18,11 +18,9 @@ A grammar for our language:
               | "|" face <dir>, <state_name>
               | "|" move <dir>, face <dir> <state_name>
 
-<dir>        := <absdir> | <reldir>
-<absdir>     := north | south | east | west
-<reldir>     := left | right | forward | backward
+<dir>        := north | south | east | west | left | right | forward | backward
 
-<state_name> := [a-zA-Z][a-zA-Z0-9_]*
+<state_name> := [a-zA-Z0-9_]+
 ```
 ## Who is the target for this design, e.g., are you assuming any knowledge on the part of the language users?
 

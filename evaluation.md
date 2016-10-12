@@ -50,6 +50,13 @@ Around a 6.  It definitely was not a 1-1 mapping from the internal representatio
 _Describe each change from your ideal syntax to the syntax you implemented, and
 describe_ why _you made the change._
 
+No changes.
+
 **On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
 
+0
+
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
+
+0(?) We were able to use the same internal representation and semantics as our
+internal DSL.
