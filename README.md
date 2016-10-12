@@ -31,11 +31,11 @@ way, so you'll also implement your syntax as an external DSL.)
      - [x] Describe your design in `design.md`
      - [x] Before you implement the syntax, write the "empty room" program in
      `example-ideal.txt`
-  - [ ] Implement your new syntax as an internal DSL
-     - [ ] Add files, as needed, to implement your syntax
+  - [x] Implement your new syntax as an internal DSL
+     - [x] Add files, as needed, to implement your syntax
      - Include two example programs
-       - [ ] `src/main/scala/piconot/internal/Empty.scala`
-       - [ ] `src/main/scala/piconot/internal/RightHand.scala`
+       - [x] `src/main/scala/piconot/internal/Empty.scala`
+       - [x] `src/main/scala/piconot/internal/RightHand.scala`
      - [ ] Describe your implementation process in `evaluation.md`
   - [ ] Implement your new syntax as an external DSL, using parser combinators
      - Include at least two example programs

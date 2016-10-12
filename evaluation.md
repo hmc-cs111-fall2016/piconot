@@ -14,7 +14,7 @@ describe_ why _you made the change._
 rule(move North, face East, "next_state")
 ```
 
-1. We have to combine rules with `,` because `;` cannot be overloaded.
+1. We have to combine rules with `,` because it was much easier to implement as a list.
 
 1. Made directions start with an uppercase so that we can reuse abstract representations
 
@@ -39,7 +39,11 @@ runPiconot(
 
 **On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
 
+We would say a 7.  We were able to keep the structure of the language relatively intact, but the concrete syntax is almost entirely different.  In general, we had to include more parentheses, quotations, and commas then we originally hoped for.  We also had to replace curly braces with parentheses and added the `rule` "keyword".
+
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
+
+Around a 6.  It definitely was not a 1-1 mapping from the internal representation to provided API, as was the case with the Regex assignment.  This was because for each "rule" that the user provided, we had to create four Picobot rules, since we incorporated relative direction.  However, this part of the assignment was much easier than creating the internal representation because it was more a programming challenge and less of a Scala challenge.
 
 ## External DSL
 
