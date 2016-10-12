@@ -2,10 +2,6 @@
 
 ## Internal DSL
 
-# Evaluation: running commentary
-
-## Internal DSL
-
 _Describe each change from your ideal syntax to the syntax you implemented, and
 describe_ why _you made the change._
 We had to change the while-loops to `WhileInner` and `WhileOuter` because the word
