@@ -4,7 +4,6 @@ import scala.language.implicitConversions
 import PiconotTypes._
 
 package object PiconotTypes {
-  type Rule = Seq[Command]
   type StateName = String
 }
 
@@ -16,6 +15,8 @@ case class State(val name: StateName, val rules: Seq[Rule])
   */
 abstract class Command
 
+case class Rule(val move: Option[Move], val face: Option[Face], val goto: Option[Goto])
+
 /** a Move command instructs picobot to take one step in the given direction */
 case class Move(val dir: Dir) extends Command
 
@@ -23,7 +24,7 @@ case class Move(val dir: Dir) extends Command
 case class Face(val dir: Dir) extends Command
 
 /** a Goto command causes a state change to the given state */
-case class Goto(val state: StateName) extends Command
+case class Goto(val stateName: StateName) extends Command
 
 /** a Dir is used to specify the direction for picobot to move or face. */
 abstract class Dir
@@ -44,10 +45,6 @@ object Backward extends Dir
 // Implementation stuff: not part of the abstract syntax
 ////////////////////////////////////////////////////////////////////////////////
 
-object Rule {
-  def apply(commands: Command*) = commands
-}
-
 object Goto {
   implicit def stateName2Goto(name: StateName) = Goto(name)
 }
@@ -64,19 +61,20 @@ object Piconot {
    *  unnecessary. This also ensures that commands are given in the order
    *  <move> <face> <goto>.
    */
-  def rule(move: Move) = Rule(move)
-  def rule(move: Move, face: Face) = Rule(move, face)
-  def rule(move: Move, face: Face, goto: Goto) = Rule(move, face, goto)
-  def rule(face: Face) = Rule(face)
-  def rule(face: Face, goto: Goto) = Rule(face, goto)
-  def rule(goto: Goto) = Rule(goto)
-  def rule(move: Move, goto: Goto) = Rule(move, goto)
+  def rule(move: Move) = Rule(Some(move), None, None)
+  def rule(face: Face) = Rule(None, Some(face), None)
+  def rule(goto: Goto) = Rule(None, None, Some(goto))
+
+  def rule(move: Move, face: Face) = Rule(Some(move), Some(face), None)
+  def rule(move: Move, goto: Goto) = Rule(Some(move), None, Some(goto))
+  def rule(face: Face, goto: Goto) = Rule(None, Some(face), Some(goto))
+
+  def rule(move: Move, face: Face, goto: Goto) = Rule(Some(move), Some(face), Some(goto))
+
 
   /** Create a state with given name and rules. */
   def state(name: StateName)(body: Rule*) = State(name, body)
 
-  def runPiconot( startstate: StateName,
-           startdir: Dir, states: State*) {
-    //run
-  }
+  def runPiconot( startstate: StateName, startdir: Dir, states: State*) =
+    PiconotRunner.run(startstate, startdir, states)
 }
