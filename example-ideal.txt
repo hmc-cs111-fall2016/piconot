@@ -4,7 +4,7 @@
 // comments will not actually be implemented
 
 while (free W) {
-	move L
+	move W
 }
 
 while (free N) {
