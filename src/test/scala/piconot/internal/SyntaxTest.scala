@@ -32,8 +32,6 @@ class SyntaxSuite extends FunSuite with Matchers {
   /** test that a program compiles.  The semantics wil be tested later*/
   test("create a program") {
     runPiconot(
-        startstate="state1",
-        startdir=North,
 
         state ("state1") (
             rule(move(Forward), face(Right), "state2"),

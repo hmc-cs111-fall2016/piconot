@@ -15,8 +15,6 @@ import picolib.maze.Maze
 object RightHand extends JFXApp {
     val maze = Maze("resources" + File.separator + "maze.txt")
     val rules = runPiconot (
-        startstate="0",
-        startdir=North,
 
         state ("0") (
             rule(move(Right)),

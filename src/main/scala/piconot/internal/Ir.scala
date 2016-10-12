@@ -75,6 +75,5 @@ object Piconot {
   /** Create a state with given name and rules. */
   def state(name: StateName)(body: Rule*) = State(name, body)
 
-  def runPiconot( startstate: StateName, startdir: Dir, states: State*) =
-    PiconotRunner.run(startstate, startdir, states)
+  def runPiconot(states: State*) = PiconotRunner.run(states)
 }

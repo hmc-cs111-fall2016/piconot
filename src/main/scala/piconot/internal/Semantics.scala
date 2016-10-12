@@ -6,7 +6,7 @@ import picolib.maze._
 import PiconotTypes._
 
 object PiconotRunner {
-  def run(startstate: StateName, startdir: Dir, states: Seq[State]) = {
+  def run(states: Seq[State]) = {
     states.map(evalState).fold(List())(_ ++ _)
   }
 

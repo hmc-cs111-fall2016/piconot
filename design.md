@@ -2,27 +2,21 @@
 
 A grammar for our language:
 ```
-<program>    := <startstate> <startdir> <states>
-              | <startdir> <startstate> <states>
-
-<startstate> := startstate = <state_name>;
-<startdir>   := startdir = <absdir>;
-
-<states>     := <state> <states>
+<program>    := <state> <program>
               | <state>
 
-<state>      := state <state_name> { <rules> }
+<state>      := state <state_name> <rules>
 
 <rules>      := <rule> <rules>
               | <rule>
 
-<rule>       := move <dir>;
-              | move <dir>, <options>;
-              | <options>;
-
-<options>    := face <dir>
-              | face <dir>, <state_name>
-              | <state_name>
+<rule>       := "|" move <dir>
+              | "|" face <dir>
+              | "|" <state_name>
+              | "|" move <dir>, face <dir>
+              | "|" move <dir>, <state_name>
+              | "|" face <dir>, <state_name>
+              | "|" move <dir>, face <dir> <state_name>
 
 <dir>        := <absdir> | <reldir>
 <absdir>     := north | south | east | west

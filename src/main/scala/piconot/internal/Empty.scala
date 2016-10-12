@@ -16,8 +16,6 @@ object Empty extends JFXApp {
     val maze = Maze("resources" + File.separator + "empty.txt")
 
     val rules = runPiconot (
-        startstate="move_north",
-        startdir=North,
 
         state ("move_north") (
             rule(move(North)),
