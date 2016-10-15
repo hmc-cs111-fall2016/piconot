@@ -1,0 +1,27 @@
+// A Picobot program that can fill an empty room
+
+(W)[]:W*	// go all the way to the left
+()[W]:_	// can't go left anymore, so try to go up
+
+(N):N*	// go all the way to the top
+[N]:S	// can't go up any more, so try to go down
+
+(S):S*	// go all the way to the bottom
+[S]:E	// can't go down anymore, so try to go right
+
+(N):N*	// go all the way to the top
+[N]:E -3	// can't go up anymore, so try to go right
+		// then go back 3 steps
+		
+		
+// Internal DSL
+Condition(W_open)
+
+Condition(W_closed)
+(W) [ES]
+put all letters between ( and ) in FreeArray
+put all letters between [ and ] in OccArray
+
+
+Condition (CurrentState(0), Free(W), Occupied(E), Next(W), 1)
+
