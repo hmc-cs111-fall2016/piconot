@@ -1,0 +1,13 @@
+# jk, this doesnt work
+# we don't support super multiple nesting
+# also, this is too hard without knowing which direction the bot is facing
+
+while (any) {
+    while (free S) {
+        move S
+        while (free E) {
+            move E
+        }
+    }
+
+}
