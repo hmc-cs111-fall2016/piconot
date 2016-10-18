@@ -17,9 +17,13 @@ The following are some observations we made and challenges we encountered when c
 * We also realized why the original Picobot language included 2 integers to represent states: one to represent the current staet, and the other to represent the state that the machine should go to after the current command is executed.
 
 * In the case clas Free, which takes 4 strings and has a method called toFreeArray, we realized that a "Free" array can have 0, 1, 2, 3, of 4 parameters, representing how many States are free. We did not want to create 5 different case class objects representing the 5 possible constructors for the case class Free, so we changed the syntax (see Empty.scala) so that Free needed to take 4 String parameters. Below is an example of a command:
-    Condition(CurrentState(0), Free("W", "", "", ""), Occupied("", "", "", ""), Next("W"), 0).set.
-    Whereas our original language would have been:
-    Condition(CurrentState(0), Free("W"), Occupied(), Next("W"), 0).set, which allows both Free and Occupied to only anywhere between 0 and 4 parameters, inclusive. 
+
+> Condition(CurrentState(0), Free("W", "", "", ""), Occupied("", "", "", ""), Next("W"), 0).set.
+
+Whereas our original language would have been:
+ > Condition(CurrentState(0), Free("W"), Occupied(), Next("W"), 0).set, 
+ 
+ which allows both Free and Occupied to only anywhere between 0 and 4 parameters, inclusive. 
 
 
 
