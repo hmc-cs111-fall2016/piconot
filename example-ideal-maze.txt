@@ -1,0 +1,31 @@
+StartingState = "North"
+
+// For right hand rule
+North = {
+	If (Nothing[N] and Something[E]) Go North
+	If (Nothing[E]) Go East
+	If (Something[N] and Something[E] and Something[W]) Go South
+	If (Something[N] and Something[E]) Go West
+	
+}
+
+West = {
+    If (Nothing[W] and Something[N]) Go West
+	If (Nothing[N]) Go North
+	If (Something[W] and Something[N] and Something[S]) Go East 
+	If (Something[W] and Something[N]) Go South
+}
+
+South = {
+    If (Nothing[S] and Something[W]) Go South
+	If (Nothing[W]) Go West
+	If (Something[S] and Something[W] and Something[E]) Go North
+	If (Something[S] and Something[W]) Go East
+}
+
+East = {
+    If (Nothing[E] and Something[S]) Go East
+	If (Nothing[S]) Go South
+	If (Something[E] and Something[S] and Something[N]) Go West 
+	If (Something[E] and Something[S]) Go North
+}

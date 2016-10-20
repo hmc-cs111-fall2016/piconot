@@ -1,21 +1,21 @@
 StartingState = "North"
 
 North = {
-    if (Nothing [N]) Go North
-    if (Something [N] and Nothing [W]) Go West
-    if (Something [N, W]) Go East
+    if (Nothing[N]) Go North
+    if (Something[N] and Nothing [W]) Go West
+    if (Something[N, W]) Go East
 }
 
 West = {
-    if (Nothing [S]) Go South
+    if (Nothing[S]) Go South
 }
 
 South = {
-    if (Nothing [S]) Go South
-    if (Something [S]) Go North
+    if (Nothing[S]) Go South
+    if (Something[S]) Go North
 }
 
 East = {
-    if (Nothing [E]) Go East
-    if (Something [E]) Go South
+    if (Nothing[E]) Go East
+    if (Something[E]) Go South
 }
