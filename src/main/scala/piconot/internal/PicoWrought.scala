@@ -1,4 +1,3 @@
-
 package picobot.internal
 
 import picolib.{semantics => IR}
@@ -20,23 +19,19 @@ val rules = List(
 
 // test all of it together
 
-class StateAndSurroundings(name: String, surroundings: IR.Surroundings) {}
+case class StateAndSurroundings(name: String, surroundings: IR.Surroundings)
 
-class State(name: String) {
+case class State(name: String) {
   def &(surroundings: String) = {
     // parse surroundings
-    val surroundings = IR.Surroundings(Blocked, Open, Anything, Anything))
+    val surroundings = IR.Surroundings(IR.Blocked, IR.Open, IR.Anything, IR.Anything)
     StateAndSurroundings(name, surroundings)
   }
 }
 
 object State {
-  implicit def string2State(str: String): State = {
-    State(str)
-  }
+  implicit def string2State(str: String): State = State(str)
 }
-
-
 
 
 
