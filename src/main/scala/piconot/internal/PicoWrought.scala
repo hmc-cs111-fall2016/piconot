@@ -24,6 +24,7 @@ case class StateAndSurroundings(name: String, surroundings: IR.Surroundings)
 case class State(name: String) {
   def &(surroundings: String) = {
     // parse surroundings
+    val reg = """([N|E|W|S]{1,4}\!)? *([N|E|W|S]{1,4}_)?""".r
     val surroundings = IR.Surroundings(IR.Blocked, IR.Open, IR.Anything, IR.Anything)
     StateAndSurroundings(name, surroundings)
   }
