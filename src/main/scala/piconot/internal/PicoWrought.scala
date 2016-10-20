@@ -19,10 +19,20 @@ val rules = List(
 
 // test all of it together
 
-case class StateAndSurroundings(name: String, surroundings: IR.Surroundings)
+case class StateAndSurroundings(name: String, surroundings: IR.Surroundings) {
+  def ->(args: (IR.MoveDirection, String)) = {
+    val (direction, targetState) = args
+    IR.Rule(
+      IR.State(name),
+      surroundings,
+      direction,
+      IR.State(targetState)
+    )
+  }
+}
 
 case class State(name: String) {
-  def &(surroundings: String) = {
+  def and(surroundings: String) = {
     // parse surroundings
     val surroundings = IR.Surroundings(IR.Blocked, IR.Open, IR.Anything, IR.Anything)
     StateAndSurroundings(name, surroundings)
