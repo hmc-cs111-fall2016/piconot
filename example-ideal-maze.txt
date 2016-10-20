@@ -5,8 +5,7 @@ North = {
 	If (Nothing[N] and Something[E]) Go North
 	If (Nothing[E]) Go East
 	If (Something[N] and Something[E] and Something[W]) Go South
-	If (Something[N] and Something[E]) Go West
-	
+	If (Something[N] and Something[E]) Go West	
 }
 
 West = {

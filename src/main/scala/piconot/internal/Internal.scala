@@ -2,7 +2,12 @@ package piconot.internal
 
 
 Object Internal extends App {
-	def Something(list: List[Int]): List[Int] = {
+
+	def If(something: List[Int], nothing: List[Int]): Surroundings = {
+		var res = Surroundings(Anything,Anything,Anything,Anything)
+	}
+
+	def Something(list: String): List[Int] = {
 		 // 0 = Anything
 		 // 1 = Open
 		 // 2 = Blocked
@@ -19,9 +24,10 @@ Object Internal extends App {
 		 if (list.contains("S")) {
 		 	dirList[3] = 2
 		 }
-    	),
+
+    	 dirList
 	}
-	def Nothing(list: List[Int]): List[Int] = {
+	def Nothing(list: String) = {
 		 // 0 = Anything
 		 // 1 = Open
 		 // 2 = Blocked
@@ -38,7 +44,8 @@ Object Internal extends App {
 		 if (list.contains("S")) {
 		 	dirList[3] = 1
 		 }
-    	),
+    	 
+    	 dirList
 	}
 }
   
