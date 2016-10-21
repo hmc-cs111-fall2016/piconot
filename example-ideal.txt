@@ -1,4 +1,3 @@
-```
 #start = corner
 N_sweep_move_W {
   N_ -> N  // move north when there's not a wall
@@ -13,4 +12,3 @@ corner {
   E! S_ -> S
   E! S! -> N_sweep_move_W  
 }
-```
