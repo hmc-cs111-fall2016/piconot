@@ -26,15 +26,13 @@ Whereas our original language would have been:
  which allows both Free and Occupied to only anywhere between 0 and 4 parameters, inclusive. 
 
 
-
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
 
 It took quite a bit of thinking (especially when it came to using case classes, abstract classes, defs, etc.) , but this is how we ended up mapping our syntax to the provided API:
 
 Within our InternalDSL class, we have a method called setSurroundings which takes two string arrays and returns a Surroundings object. The goal of this method is to take 2 string arrays, one representing the letters that are exclusively free (so not either free OR occupied) and the letters that are exclusively occupied. Our method achieves this by first creating an array of 4 RelativeDescriptions, the 0th index corresponding to the RelativeDescription of N that the user designates (either Anything, Occupied, or Free), and the 3rd index representing the RelativeDescription of S that the user designates (either Anything, Occupied, or Free). Then, we have 8 if statements to check whether N, E, W, or S is in the "Free" string array, and whether N, E, W, or S is in the "Occupied" string array. If, for example, W is in the "Free" string array, we would assign array[2] = Free to the array of 4 RelativeDescriptions. At the end, we return the array of 4 RelativeDescriptions, which is either populated with all "Anything"'s, or a combination of "Anything", "Free", and "Occupied". 
 
-
-
+We tried to make our language fit within the Scala syntax, but we didn't see pattern matching as an option, which seems to have been one of the only ways to make our language work as an internal DSL. however, we ended up with an internal DSL that served as an intermediate DSL to our external DSL.
 
 ## External DSL
 
