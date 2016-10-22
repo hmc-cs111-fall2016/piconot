@@ -1,0 +1,19 @@
+Label start:
+    Face west
+    Go until wall
+    Face North
+    Go until wall
+    Jump to loop
+
+Label loop:
+    Face South
+    Go until wall
+    Face East
+# Moves once before checking surrounding state so it will move 
+# 1 spot, check state, see a right-wall and then move on to the next line    
+    Go until right-wall 
+    Face North
+    Go until wall
+    Face East
+    Go until left-wall
+    Jump to loop
