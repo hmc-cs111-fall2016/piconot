@@ -1,6 +1,6 @@
 package picobot.internal
 
-import picolib.{semantics => IR}
+import picolib.{semantics => API}
 import scala.language.implicitConversions
 import scala.util.matching.Regex
 
@@ -13,14 +13,14 @@ val rules = List(
 // implicitly convert first string to object (of type State) with '&' methdod which returns an
 // object (StateAndSurroundings) which has an -> method which takes in tuple of, direction and state
 
-case class StateAndSurroundings(name: String, surroundings: IR.Surroundings) {
-  def ->(args: (IR.MoveDirection, String)) = {
+case class StateAndSurroundings(name: String, surroundings: API.Surroundings) {
+  def ->(args: (API.MoveDirection, String)) = {
     val (direction, targetState) = args
-    IR.Rule(
-      IR.State(name),
+    API.Rule(
+      API.State(name),
       surroundings,
       direction,
-      IR.State(targetState)
+      API.State(targetState)
     )
   }
 }
@@ -34,11 +34,11 @@ case class State(name: String) {
    */
   def surroundStatus(walls: String, blanks: String, direction: Char) = {
     if (walls != null && (walls contains direction))
-      IR.Blocked
+      API.Blocked
     else if (blanks != null && (blanks contains direction))
-      IR.Open
+      API.Open
     else
-      IR.Anything
+      API.Anything
   }
 
   def and(surr: String) : StateAndSurroundings = {
@@ -51,7 +51,7 @@ case class State(name: String) {
     val w = surroundStatus(walls, blanks, 'W')
     val s = surroundStatus(walls, blanks, 'S')
 
-    val surroundings = IR.Surroundings(n,e,w,s)
+    val surroundings = API.Surroundings(n,e,w,s)
     StateAndSurroundings(name, surroundings)
   }
 }
