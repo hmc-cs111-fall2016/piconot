@@ -1,7 +1,6 @@
 package piconot.internal
 
 import java.io.File
-import scalafx.application.JFXApp
 
 import picolib.maze.Maze
 import picolib.semantics._
@@ -11,7 +10,7 @@ import picolib.semantics._
  *  the picolib library that you might need to implement your language
  */
 
-object EmptyRoom extends JFXApp {
+object EmptyRoom extends App {
   val emptyMaze = Maze("resources" + File.separator + "empty.txt")
 
   val rules = List(
@@ -96,9 +95,7 @@ object EmptyRoom extends JFXApp {
   )
 
   object EmptyBot extends Picobot(emptyMaze, rules)
-    with TextDisplay with GUIDisplay
-
-  stage = EmptyBot.mainStage
+    with TextDisplay
 
   EmptyBot.run()
 
