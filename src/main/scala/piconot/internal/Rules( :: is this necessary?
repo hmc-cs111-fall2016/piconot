@@ -1,0 +1,28 @@
+Rules( // is this necessary?
+Label (name) (
+Face ("North") // every new face is a new state I believe
+Go.until(<Surrounding elem> or "N*xS") // AKA Go until <blah>
+.
+.
+.
+Goto (<Label Name>)
+)
+.
+.
+.
+)
+
+
+need a Face case class:   
+    
+    case class Face (direction: String)
+
+need a Go class with the until method:
+    
+    case class Go () = {
+
+        def until (sur: String) = {
+            Use direction facing and surrounding to create a picobot rule
+        }
+
+    }
