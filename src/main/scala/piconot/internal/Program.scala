@@ -9,8 +9,7 @@ import picolib.maze.Maze
 import picolib.semantics._
 
 /**
- *  This is an intentionally bad internal language, but it uses all the parts of
- *  the picolib library that you might need to implement your language
+ *  This uses our internal DSL syntax to make the rules for picobot
  */
 
 object EmptyRoomDSL extends JFXApp {
