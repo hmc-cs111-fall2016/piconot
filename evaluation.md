@@ -92,7 +92,7 @@ Writing def dir was relatively simple:
          | ("E" ^^^ East)
          | ("W" ^^^ West)
          | ("S" ^^^ South)
-         | ("_" ^^^ StayHere) )
+         | ("_" ^^^ StayHere))    * 
          
 Writing def freeDirections and def occDirections was a little difficult. The goal was to convert a list of directions between brackets to an occupied object used as an intermediate representation:
 def freeDirections : Parser[Free] =  
