@@ -3,13 +3,18 @@ import picolib.maze.Maze
 import picolib.semantics._
 
 
-
+  /**
+   * Our rule represents the left half of a picobot rule.  That is it
+   * represents for what initial state this rule applies to and for which
+   * opened or closed NEWS directions the rule applies to.
+   */
 case class OurRule (val state : OurState, val cond : Conditions){
+
+	/**
+	 * helper function to convert strings such as "S" to the move direction South
+	 */
   def charToMoveDirection (s : String) : MoveDirection=
 	{
-    /**
-     * helper function to convert strings such as "S" to the move direction South
-     */
 		var goDirection : MoveDirection  = North;
     if (s.equals("E"))
       goDirection = East
@@ -20,9 +25,13 @@ case class OurRule (val state : OurState, val cond : Conditions){
     goDirection
 	}
   
+  /**
+   * This will create a Rule that the picobot API we were given can consume
+   * @param actions a string of the form go N/E/W/S/nowhere changeState INTEGER
+   */
   def -> (actions : String) : Rule = 
   {
-    // split the string to an array containg ["go", "<N/E/W/S>", "changeState", "<stateNum>"]
+    // split the string to an array containg ["go", "<direction>", "changeState", "<stateNum>"]
     val actionsArr = actions.split(" +")
     
     // sanity check
@@ -78,11 +87,6 @@ case class OurState (val s: Int)
   
 }
 
-case class Direction (val dir : Char)
-{
-
-}
-
 case class Conditions (val blocked : List[Boolean], 
     val dir : List[Char])
 {
@@ -105,4 +109,5 @@ object PicoBotExtender {
 		 // which represents the rule for state 0 when north is free and south is blocked
      OurRule(OurState(value.charAt(0).toString.toInt), conditionConverterHelp(value.tail, List(), List()))
    }
+
 }
