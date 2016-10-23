@@ -83,8 +83,7 @@ The following is the def nextState:
    | """^\*""".r ^^ {s => 0}
    | """^\+""".r ^^ {s => 1})
 
-The challenge in implementing this understanding parser combinators. In our original design, we wanted to have a blank space at the end of the rule to represent advancing to currentState++. However, this always gave us an error message when we were creating the tests. Then, we realized that it is because we parse each rule with: override protected val whiteSpace = """(\s|//.*)+""".r 
-
+The challenge in implementing this understanding parser combinators. In our original design, we wanted to have a blank space at the end of the rule to represent advancing to currentState++. However, this always gave us an error message when we were creating the tests. Then, we realized that it is because we parse each rule with the override protected val.
 
 Writing def dir was relatively simple:
 // Converts N,E,W,S, and _ to appropriate MoveDirection objects.
@@ -121,6 +120,29 @@ def rule : Parser[Rule] = (
         Condition(currState, free, occ, dir, nextState).createRule }
  )
  
+ Another thing we had to
  
  # Intermediate Representation 
-  
+ 
+ Our biggest struggle with the intermediate representation is that we did so much with the Parser class that for some parts of the program, it didn't seem like we needed to rely on another layer of representation to be defined in the intermediate representation class.
+ 
+ For example, the following is the case class for the "Free" object, which takes a list of MoveDirections. In the original parser, MoveDirections had to be in a list because repsep creates a List object. We use the List object that def freeDirections, in the Parser class, creates, and use that as the argument to the Free case class, in the IR class, and make the Free object an array. However, we could have combined the two steps -- MoveDirections to List of MoveDirections to Array of MoveDirections -- into one step in the Parser. That's what we did at first, and why we didn't think we needed to define a case class for Free in the Internal Representation. However, we ended up deciding to break it down into two steps: MoveDirections to List of MoveDirections in the Parser class, and List of MoveDirections to Array of MoveDirections in the Intermediate Representation class. Here is the final case class we wrote in the Intermediate Representation class:
+ 
+ // A list of of the "Open" directions in Surroundings
+case class Free (freeList: List[MoveDirection]) extends ExternalDSL{ 
+  def toFreeArray = {
+    freeList.toArray
+  } 
+}
+
+The case class Condition in our external DSL is very similar to the case class Condition in our internal DSL.
+
+# Tests 
+
+We spent a lot of time writing the tests for our external DSL. Part of the struggle was that the IDE did not provide a reason for any error, but it only provided what the assert specified that the result would be. We tried using "should be" statements, assertResult instead of assert, and also imported different packages and extended different classes. At first, we tried doing an assert on an entire rule (one line of the program), but then decided to break each rule down into its different components and test each additional component incrementally. For example, we first tested the parsing for currentState. When we parsed that correctly, we then parsed the currentState and freeDirections. When we parsed that correctly, we then parsed the currentState and freeDirections and occDirections, and so on, until we could parse different iterations of the rule correctly (different iterations because we provide some semantic flexibility in writing a rule).
+
+It was during the tests that we realized we wanted to make the change from using an optional character to represent the nextState versus using one of 3 types of characters: a number (either positive or negative), an asterisk, or a plus sign. 
+
+# Difficulty
+
+Anna and I would say that we'd give implementing the external DSL a difficulty of 8. We struggled with a general lack of familiarity with Scala (and with other challenges I've already outlined), and sometimes had to deviate from our original design to make our language easier to parse. 
