@@ -85,15 +85,8 @@ The following is the def nextState:
 
 The challenge in implementing this understanding parser combinators. In our original design, we wanted to have a blank space at the end of the rule to represent advancing to currentState++. However, this always gave us an error message when we were creating the tests. Then, we realized that it is because we parse each rule with the override protected val.
 
-Writing def dir was relatively simple:
-// Converts N,E,W,S, and _ to appropriate MoveDirection objects.
-  def dir: Parser[MoveDirection] =
-       (   ("N" ^^^ North)
-         | ("E" ^^^ East)
-         | ("W" ^^^ West)
-         | ("S" ^^^ South)
-         | ("_" ^^^ StayHere))    * 
-         
+Writing def dir was relatively simple.
+
 Writing def freeDirections and def occDirections was a little difficult. The goal was to convert a list of directions between brackets to an occupied object used as an intermediate representation:
 def freeDirections : Parser[Free] =  
    "(" ~> repsep(dir, ",") <~ ")" ^^ { (fd: List[MoveDirection]) => Free(fd) }
