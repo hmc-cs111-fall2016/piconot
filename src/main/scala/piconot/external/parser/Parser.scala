@@ -16,8 +16,8 @@ object PicoParser extends JavaTokenParsers with PackratParsers
   def apply(s: String): ParseResult[Prog] = parseAll(prog, s)
 
   lazy val prog: PackratParser[Prog] =
-    ( "#"~stateName~comment~stateChunks ^^ {case "#"~start~comm~chunks =>
-                                                  Prog(start, chunks)})
+    ( comment~>"#"~stateName~comment~stateChunks 
+      ^^ {case "#"~start~comm~chunks => Prog(start, chunks)})
 
   lazy val stateChunks: PackratParser[List[StateChunk]] = 
     ( stateChunks~stateChunk ^^ {case list~chunk => list :+ chunk}
@@ -51,7 +51,9 @@ object PicoParser extends JavaTokenParsers with PackratParsers
 
   lazy val directions: Parser[String] = """(N|E|W|S){1,4}""".r 
   lazy val movement: Parser[String] = """(N|E|W|S)""".r 
-  lazy val stateName: Parser[String] = ident
+  
+  // state names must be lower case
+  lazy val stateName: Parser[String] = """([0-9]|[a-z]|_)*""".r
   lazy val comment: Parser[String] = """(//.*)?""".r
 
 }
