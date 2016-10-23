@@ -26,7 +26,7 @@ case class StateAndSurroundings(name: String, surroundings: API.Surroundings) {
 }
 
 case class State(name: String) {
-  /* Helper function for and
+  /* Helper function for `and`
    * Determines the status of a direction
    * given two strings specifying the walls and blanks.
    * Unspecified behavior if a user specifies that a direction is both a wall

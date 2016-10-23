@@ -28,9 +28,11 @@ object PicoParser extends JavaTokenParsers with PackratParsers {
   //lazy val stateChunk: PackratParser[Expr] =
       //( stateName~"{"~conditions~"}" ^^ {case name~"{"~conds~"}" =>  })
       //
-  lazy val surr = ParseResult[API.Surroundings] =
-    ( walls~"!"~blanks~"_" ^^ {case w} // get w and b then have IR object of w and b which has a method that returns the corresponding API.Surroundings
-      | blanks~"_"~walls~"!" ^^
-      | walls~"!" ^^
-      | blanks~"_" ^^ )
+  lazy val surr: ParseResult[API.Surroundings] =
+    ( walls~"!"~blanks~"_" ^^ {case walls~"~"~blanks~"_" => 
+                                                Surr(walls, blanks).translate } 
+    | blanks~"_"~walls~"!" ^^ {case blanks~"_"~walls~"!" =>
+                                                Surr(walls, blanks).translate }
+    | walls~"!" ^^ {case walls~"!" => Surr(walls, null).translate }
+    | blanks~"_" ^^ {case blanks~"_" => Surr(null, blanks).translate} )
 }
