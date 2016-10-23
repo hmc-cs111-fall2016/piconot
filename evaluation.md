@@ -41,7 +41,23 @@ describe_ why _you made the change._
 
 **On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
 
+We changed out syntax a little from our original design. 
 
+The first change is that we include the integer of the current state. We made this change because it's difficult to otherwise keep track of the current state number.
 
+The second change is that we use the plus character '+' to represent moving from one state directly to the next state. In our original design, we wanted to have an optional character at the end of one line of the command. If there was an asterisk at the end of the rule, that means that the program should stay at that state (the idea is that the asterisk generally represents repetition of a previously-undetermined amount of times). If there was no asterisk, that means the program would jump to the next state (aka currentState ++). If there was either a positive or negative number, then the program would add that number to the integer of the currentState to get the nextState. Now, we use the plus character '+' to represent moving from currentState to currentState++. Originally, we didn't want to have a special character designated for moving to the next state (aka currentState++) because we thought that a lot of programmers would be very used to working with sequential code, and moving to currentState++ seemed very obvious and unnecessary to explicitly state. However, including the optional character seemed to also introduce some inconsistencies in our language. Thus, we settled for replacing the "optional character" with a mandatory character (either asterisk, +, or a positive/negative integer) to represent the integer of the nextState.
 
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
+
+We wanted to allow some flexibility in the language. Our final external DSL language is in this format:
+
+Int currentState ~ 
+*(Array[RelativeDescriptions] free) ~ 
+[Array[RelativeDescriptions occupied]* ~ 
+RelativeDescription nextDirection ~
+Int nextState
+
+The freeArrayand occupiedArray are optional:
+If there are no free directions, the user can write () (parentheses with no letters inside) or exclude the () entirely. If the user decides to use (), he/she must list the occupiedArray after the freeArray. For example, the user can write either ()[N,E] or [N,E], but cannot write [N,E]().
+
+Similarly, if there are no occupied directions, the user can write [] (square brackets with no letters inside) or exclude the [] entirely. If the user decides to use [], he/she must list the occupiedArray after the freeArray. For example, the user can write either (N,E)[] or (N,E), but cannot write [](N,E).
