@@ -6,9 +6,13 @@ _Describe each change from your ideal syntax to the syntax you implemented, and
 describe_ why _you made the change._
 
 **On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
+10. The syntax is not as clear as we wanted it to be initially. Now we're relying
+on one method, `If`, that calls every other method.  Thus, we're passing in strings as
+parameters and calling the other relevant functions, `Nothing`, `Something`, and `Go` from
+the method `If`. 
 
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
-
+10. Currently having a bunch of trouble really making it fit with the API.  
 ## External DSL
 
 _Describe each change from your ideal syntax to the syntax you implemented, and

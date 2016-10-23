@@ -6,18 +6,30 @@ import picolib.semantics._
 import scala.collection.mutable.MutableList
 import scalafx.application.JFXApp
 
+
+// Internal syntax: 
+// If ("N", "Nothing(N)","Go(North)")
+// If ("N", Something(N) and Nothing(W)", "Go(West)")
+// If ("N", Something(N, W), "Go(East)")
+// If ("W", Nothing(S), "Go(South)")
+
 //TODO: 
 // - Fix Regex/make sure they work
-// - Implement Go, RHSBuilder, state stuff properly
-// - Handle weird implicit thing for North If(...)
 // - Fix up rule builder to conform to our nextState being a String and converting that to an int for the rules
 
-class Internal extends App {
-	private val listOfRules = MutableList.empty[Rule]
 
+//TODO: 
+// Create our own rule builder.  We only have 4 possible states (N, E, W, S) for starting and nextstate,
+// and we can set these in the new rules based on the input for Go. See the current Go definition below
+// to see what I mean.  Move the Go method outside of the class it's in - don't need to really encapsulate it
+// in something else.
+
+
+class Internal extends App {
+	private val rules = MutableList.empty[Rule]
 
 	// Create objects North West South East which would be first params
-	def If(somethingNothingPart: String, goPart: String): Surroundings = {
+	def If(startDirection: String, somethingNothingPart: String, goPart: String) = {
 		// This is all kind of sketchy right now, but shows a direction we could
 		// go. Basically, this If function would take in a string of instructions
 		// (If("Nothing[N] and Something[W]", "Go North"))) we'd need to parse it
@@ -29,108 +41,108 @@ class Internal extends App {
 		val somethingInputs = somethingNothingPart.split("(?<=Something\()(.*)(?=\))")
 		val nothingInputs = somethingNothingPart.split("(?<=Nothing\()(.*)(?=\))")
 
-		var initSurroundingsList = [Anything, Anything, Anything, Anything]
+		var initSurroundingsList = Array[RelativeDescription](Anything, Anything, Anything, Anything)
 		
 		// Create a Surroundings object for the particular state/set of instructions
-		var nothingList = Nothing("N", initSurroundingsList)
-		val surroundingsInputs = Something("N", nothingList)
+		var nothingList = Nothing(initSurroundingsList)
+		val surroundingsInputs = Something(nothingList)
 
-		val surroundingsObject = Surroundings(surroundingsInputs[0], surroundingsInputs[1], surroundingsInputs[2], surroundingsInputs[3])
+		val surroundingsObject = Surroundings(surroundingsInputs(0), surroundingsInputs(1), surroundingsInputs(2), surroundingsInputs(3))
+		
+		var startingState = State("0")
+		if (startDirection == "E") {
+			startingState = State("1")
+		}
+		if (startDirection == "W") {
+			startingState = State("2")
+		}
+		if (startDirection == "S") {
+			startingState = State("3")
+		}
 
 		// Create the output values	
 		val goInput = goPart.split("Go\((.*)(?=\))")
-		val outputState = Go(goInput)
+		val moveDirection, nextState  = Go(startingState, surroundingsObject, goInput)
 
-		// Create some function to build rules to go into listOfRules
-		val rule = ruleBuilder(outputState, surroundingsObject)
+		// Create some function to build rules to go into rules
+		// val rule = new RuleBuilder(startingState, surroundingsObject)
 		
-		// Create some function to add a rule to the listOfRules field.
-		// Actually this is handled in ruleBuilder
-		// addRule(rule)
 	}
 
 
-	def Something(list: List[Surroundings]) = {
+	def Something(list: Array[RelativeDescription]) = {
 		 // 0 = Anything
 		 // 1 = Open
 		 // 2 = Blocked
 		 var dirList = list
 		 if (list.contains("N")) {
-		 	dirList[0] = Blocked
+		 	dirList(0) = Blocked
 		 }
 		 if (list.contains("E")) {
-		 	dirList[1] = Blocked
+		 	dirList(1) = Blocked
 		 } 
 		 if (list.contains("W")) {
-		 	dirList[2] = Blocked
+		 	dirList(2) = Blocked
 		 }
 		 if (list.contains("S")) {
-		 	dirList[3] = Blocked
+		 	dirList(3) = Blocked
 		 }
 
     	 dirList
 	}
 
-	def Nothing(list: List[Surroundings]) = {
+	def Nothing(list: Array[RelativeDescription]) = {
 		 // 0 = Anything
 		 // 1 = Open
 		 // 2 = Blocked
 		 var dirList = list
 		 if (list.contains("N")) {
-		 	dirList[0] = Open
+		 	dirList(0) = Open
 		 }
 		 if (list.contains("E")) {
-		 	dirList[1] = Open
+		 	dirList(1) = Open
 		 } 
 		 if (list.contains("W")) {
-		 	dirList[2] = Open
+		 	dirList(2) = Open
 		 }
 		 if (list.contains("S")) {
-		 	dirList[3] = Open
+		 	dirList(3) = Open
 		 }
-	 
     	 dirList
 	}
 
-	def Go(direction: String) = {
-		 if (direction == "North") {
-		 	0
-		 }
-		 if (direction == "East") {
-		 	1
-		 } 
-		 if (direction == "West") {
-		 	2
-		 }
-		 if (direction == "South") {
-		 	3
-		 }
-	}
+	def Go(startingState: State, surroundingsObject: Surroundings, direction: String) = {
+	    val program = Internal.this
+	    if (direction == "North") {
+  		 	val rule = new Rule(startingState, surroundingsObject, North, State("0"))
+  		 	program.addRule(rule)
+  		}
+  		else if (direction == "East") {
+  			val rule = new Rule(startingState, surroundingsObject, East, State("1"))
+  			program.addRule(rule)
 
-	class RHSBuilder(val moveDirection: MoveDirection) {
-    	def apply(nextState: String): (MoveDirection, State) =
-      		(moveDirection, new State(nextState.toString))
-  	}
-  
-  	// internal DSL names for move directions
-  	object North extends RHSBuilder(North)
-  	object East extends RHSBuilder(East)
-  	object West extends RHSBuilder(West)
-  	object South extends RHSBuilder(South)
-  	// Need some StayHere object?
+  		} 
+  		else if (direction == "West") {
+  			val rule = new Rule(startingState, surroundingsObject, West, State("2"))
+  			program.addRule(rule)
+
+  		}
+  		else if (direction == "South") {
+  			val rule = new Rule(startingState, surroundingsObject, South, State("3"))
+  			program.addRule(rule)
+  		}	    
+	}
   
 	// a class to build a rule from its parts and add the rule to the running
 	// list of rules
-	class RuleBuilder(val startState: State, val surroundings: Surroundings) {
-	  val program = Picobor.this
-	  def Go(rhs: (MoveDirection, State)) = {
-	    val (moveDirection, nextState) = rhs
-	    val rule = new Rule(startState, surroundings, moveDirection, nextState)
-	    program.addRule(rule)
-	  }
-	}
+	// class RuleBuilder(val startState: State, val surroundings: Surroundings) {
+	//   val program = Internal.this
+	//   val rule = new Rule(startState, surroundings, moveDirection, nextState)
 
+	// }
 
+  	def addRule(rule: Rule) = rules += rule
+  
 	def run() = {
       val maze = Maze(mazeFilename)
       val picobot = 
