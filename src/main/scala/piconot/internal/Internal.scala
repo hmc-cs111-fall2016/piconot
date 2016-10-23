@@ -25,7 +25,7 @@ import scalafx.application.JFXApp
 // in something else.
 
 
-class Internal extends App {
+class Internal(val mazeFilename: String) extends App {
 	private val rules = MutableList.empty[Rule]
 
 	// Create objects North West South East which would be first params
@@ -38,8 +38,8 @@ class Internal extends App {
 		// (Nothing, Something, Go) to generate params for our ruleBuilder which
 		// would then create a rule to add to our rulesList, which would then be
 		// used when running the program.
-		val somethingInputs = somethingNothingPart.split("(?<=Something\()(.*)(?=\))")
-		val nothingInputs = somethingNothingPart.split("(?<=Nothing\()(.*)(?=\))")
+		val somethingInputs = somethingNothingPart.split("(?<=Something\\Q(\\E)(.*)(?=\\Q)\\E)")
+		val nothingInputs = somethingNothingPart.split("(?<=Nothing\\Q(\\E)(.*)(?=\\Q)\\E)")
 
 		var initSurroundingsList = Array[RelativeDescription](Anything, Anything, Anything, Anything)
 		
@@ -61,8 +61,8 @@ class Internal extends App {
 		}
 
 		// Create the output values	
-		val goInput = goPart.split("Go\((.*)(?=\))")
-		val moveDirection, nextState  = Go(startingState, surroundingsObject, goInput)
+		val goInput = goPart.split("Go\\Q(\\E(.*)(?=\\Q)\\E)")
+		val moveDirection, nextState  = Go(startingState, surroundingsObject, goInput(0))
 
 		// Create some function to build rules to go into rules
 		// val rule = new RuleBuilder(startingState, surroundingsObject)
