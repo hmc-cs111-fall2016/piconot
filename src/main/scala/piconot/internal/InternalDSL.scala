@@ -5,6 +5,14 @@ import scala.collection.mutable.MutableList
 import java.io.File
 import scalafx.application.JFXApp
 
+/*
+ * Internal DSL implementation for creating Picobot rules.
+ * Despite great effort, we were unable to make an accurate implementation 
+ * of our language using Internal DSL methods. Though it may have been possible
+ * with intense pattern-matching, this would have been way too timely. We decided
+ * to make a version of our DSL that ended up being useful as an intermediate 
+ * representation for our External DSL. So not all was done in vain!
+ */
 class InternalDSL extends JFXApp {
   
   def setSurroundings (freeArray:Array[String], occArray:Array[String]) : Surroundings = { 
@@ -50,6 +58,7 @@ class InternalDSL extends JFXApp {
      new Surroundings(surr_array(0), surr_array(1), surr_array(2), surr_array(3))   
   }
   
+  // Read in maze file and run picobot using list of rules
   def runPicobot (rules: List[Rule], mazeType: String) {
     val emptyMaze = Maze("resources" + File.separator + mazeType)
     
@@ -61,8 +70,10 @@ class InternalDSL extends JFXApp {
   }
 }  
 
+// Current state of picobot
 case class CurrentState(state: Int)
 
+// Open directions in Surroundings
 case class Free (dir1: String, dir2: String, dir3: String, dir4: String) {
     def toFreeArray = {
       var free_array = new Array[String](4)
@@ -75,6 +86,7 @@ case class Free (dir1: String, dir2: String, dir3: String, dir4: String) {
     }
 }
 
+// Blocked directions in Surroundings
 case class Occupied (dir1: String, dir2: String, dir3: String, dir4: String) {
   def toOccArray = {
     var occ_array = new Array[String](4)
@@ -88,6 +100,7 @@ case class Occupied (dir1: String, dir2: String, dir3: String, dir4: String) {
   }
 }
 
+// Next direction for picobot to travel in
 case class Next (dir: String) extends InternalDSL {
   def setNext = 
    dir match {
@@ -99,6 +112,7 @@ case class Next (dir: String) extends InternalDSL {
    }
 }
 
+// Creates a Rule object based on set of conditions
 case class Condition (currState: CurrentState, free: Free, occ: Occupied, dir: Next, nextState: Int) 
   extends InternalDSL {
   

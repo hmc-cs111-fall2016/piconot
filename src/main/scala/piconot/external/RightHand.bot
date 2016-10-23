@@ -1,0 +1,14 @@
+// A Picobot program that can solve a maze
+
+0(E):E+	// go right if possible 
+0(N)[E]:N* // can't go right anymore, so go up
+0[N,E]:_ 3 // can't go right or up, so go west
+1(S):S 2  // go down if possible
+1(E)[S]:E* // can't go down anymore, so go right
+1[E,S]:_+ // can't go right or down, so go up
+2(N):N -2 // when no longer can go up, go right again
+2(W)[N]:W* // can't go up so go left
+2[N,W]:_ -1 // can't go up or left, so go down
+3(W):W -1 // go left if possible
+3(S)[W]:S* // can't go left anymore, so go south
+3[W,S]:_ -3 // can't go left or down, so go right again!

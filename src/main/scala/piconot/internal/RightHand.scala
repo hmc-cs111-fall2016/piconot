@@ -6,6 +6,9 @@ import scalafx.application.JFXApp
 import picolib.maze.Maze
 import picolib.semantics._
 
+/**
+ * Rules for Picobot to solve maze using right-hand rule!
+ */
 object RightHand extends InternalDSL {
 	val rules = List (
 	Condition(CurrentState(0), Free("E", "", "", ""), Occupied("", "", "", ""), Next("E"), 1).set,
