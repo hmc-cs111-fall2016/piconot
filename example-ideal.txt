@@ -10,5 +10,5 @@ S_sweep {
 corner {
   E_ -> E
   E! S_ -> S
-  E! S! -> N_sweep_move_W  
+  ES! -> N_sweep_move_W  
 }
