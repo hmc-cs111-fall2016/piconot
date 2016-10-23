@@ -57,7 +57,70 @@ Int currentState ~
 RelativeDescription nextDirection ~
 Int nextState
 
-The freeArrayand occupiedArray are optional:
+The elements in italics (freeArrayand occupiedArray) are optional:
 If there are no free directions, the user can write () (parentheses with no letters inside) or exclude the () entirely. If the user decides to use (), he/she must list the occupiedArray after the freeArray. For example, the user can write either ()[N,E] or [N,E], but cannot write [N,E]().
 
 Similarly, if there are no occupied directions, the user can write [] (square brackets with no letters inside) or exclude the [] entirely. If the user decides to use [], he/she must list the occupiedArray after the freeArray. For example, the user can write either (N,E)[] or (N,E), but cannot write [](N,E).
+
+#Parser class 
+In the Parser class, we also account for white spaces in the rule.
+
+The first class we implemented in our external DSL was our Parser class. We defined each element of the "rule" :
+currentState 
+freeDirections
+occDirections
+dir (which represents the direction to go)
+nextState
+
+Afterwards, we also defined:
+apply (which parses the entire program)
+program (composed of 0 or more rules)
+rule (one line of the program)
+
+The following is the def nextState:
+ def nextState : Parser[Int] = 
+   ("""^-?[0-9]\d*""".r ^^ { s => (s.toInt)}
+   | """^\*""".r ^^ {s => 0}
+   | """^\+""".r ^^ {s => 1})
+
+The challenge in implementing this understanding parser combinators. In our original design, we wanted to have a blank space at the end of the rule to represent advancing to currentState++. However, this always gave us an error message when we were creating the tests. Then, we realized that it is because we parse each rule with: override protected val whiteSpace = """(\s|//.*)+""".r 
+
+
+Writing def dir was relatively simple:
+// Converts N,E,W,S, and _ to appropriate MoveDirection objects.
+  def dir: Parser[MoveDirection] =
+       (   ("N" ^^^ North)
+         | ("E" ^^^ East)
+         | ("W" ^^^ West)
+         | ("S" ^^^ South)
+         | ("_" ^^^ StayHere) )
+         
+Writing def freeDirections and def occDirections was a little difficult. The goal was to convert a list of directions between brackets to an occupied object used as an intermediate representation:
+def freeDirections : Parser[Free] =  
+   "(" ~> repsep(dir, ",") <~ ")" ^^ { (fd: List[MoveDirection]) => Free(fd) }
+   
+def occDirections : Parser[Occupied] =  
+   "[" ~> repsep(dir, ",") <~ "]" ^^ { (od: List[MoveDirection]) => Occupied(od) }
+  
+At first, instead of returning Parser[Free] and Parser[Occupied], we returned Parser[Any] because we had not yet written the intermediate representation and semantics. 
+
+Writing def rule allowed for the flexibility in whether the user wanted to include () if there were no free directions, and whether the user wanted to include [] if there were no occupied directions. However, in retrospect, we didn't define a way for the user to specify neither the free directions NOR the occupied directions. 
+As you can see below, the first pattern matches for when currentState, freeDirections, dir, and nextState are specified.
+The second pattern matches for when currentState, occDirections, dir, and nextState are specified.
+The third pattern matches for when currentState, freeDirections, occDirections, dir, and nextState are specified.
+
+def rule : Parser[Rule] = (
+    currentState ~ freeDirections ~ ":" ~ dir ~ nextState ^^
+      { case currState ~ free ~ ":" ~ dir ~ nextState   ⇒
+        Condition(currState, free, Occupied(List()), dir, nextState).createRule }
+    | currentState ~ occDirections ~ ":" ~ dir ~ nextState ^^
+      { case currState ~ occ ~ ":" ~ dir ~ nextState   ⇒
+        Condition(currState, Free(List()), occ, dir, nextState).createRule }
+    | currentState ~ freeDirections ~ occDirections ~ ":" ~ dir ~ nextState ^^
+      { case currState ~ free ~ occ ~ ":" ~ dir ~ nextState   ⇒
+        Condition(currState, free, occ, dir, nextState).createRule }
+ )
+ 
+ 
+ # Intermediate Representation 
+  
