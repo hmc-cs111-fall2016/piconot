@@ -11,6 +11,27 @@ on one method, `If`, that calls every other method.  Thus, we're passing in stri
 parameters and calling the other relevant functions, `Nothing`, `Something`, and `Go` from
 the method `If`. 
 
+We've changed from having 
+```
+North = {
+    if (Nothing[N]) Go North
+    if (Something[N] and Nothing [W]) Go West
+    if (Something[N, W]) Go East
+}
+``` 
+to represent all the rules for going North, to having 
+```
+If ("N", "Nothing(N)","Go(North)")
+If ("N", "Something(N) and Nothing(W)", "Go(West)")
+If ("N", "Something(N, W)", "Go(East)")
+```
+Now, strings have to be passed in to the main function `If`. The readability is
+definitely hurt since we moved the `North` header into a parameter for `If`. 
+The initial syntax made it very easy to read which rules are relevant
+to certain movement directions, and that is a bit lost since we are now passing
+in the direction into `If`. 
+
+
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
 10. Currently having a bunch of trouble really making it fit with the API.  
 ## External DSL
