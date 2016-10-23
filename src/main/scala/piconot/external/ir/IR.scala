@@ -3,10 +3,24 @@ package picobot.external.ir
 import picolib.{semantics => API}
 
 /* Represents the entire program */
-case class Prog(start: String, chunks: List[StateChunk]) 
+case class Prog(start: String, chunks: List[StateChunk]) {
+  def sortedRules = {
+    // "sorts" the list such that the first element is the state named start
+    // thus, this is the state the picobot will start in
+    chunks.sortWith((sc1: StateChunk, sc2: StateChunk) => sc1.name == start)
+      .map(_.getRules).flatten
+  }
+}
 
 /* Represents a set of rules for a given state */
-case class StateChunk(name: String, rules: List[Rule])
+case class StateChunk(name: String, rules: List[Rule]) {
+  def getRules = rules.map((r: Rule) => API.Rule(
+                                          API.State(name), 
+                                          r.surroundings, 
+                                          r.getMovement, 
+                                          API.State(r.newState.getOrElse(name))
+                                        ))
+}
 
 case class Rule(surroundings: API.Surroundings, 
                 movementName: Option[String],
