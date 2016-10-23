@@ -43,7 +43,7 @@ provided API.
    match the given API.
    * We used the APIs specification for directions (e.g. `East` and `StayHere`)
    rather than "E" and omitting the direction for `StayHere`. This was so `->`
-   can have take one argument that's a tuple of fized size.
+   can have take one argument that's a tuple of fixed size.
    * There is quite a bit of boilerplate code in terms of import and setting
    up the room. For example, the implicit conversion absolutely needed 
    the `import State._` line in the same file as the code for it to work.
@@ -55,7 +55,7 @@ We give it a 7. The tree structure and the description of walls and blanks are
 the two major components of our syntax. We lost the tree structure. But managed
 to keep the description of walls and blanks.
 
-We also needed to add parantheses and keywords to connect different pieces of a
+We also needed to add parentheses and keywords to connect different pieces of a
 rule (i.e. `and`) as well as to specify precedence.
 
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to 
