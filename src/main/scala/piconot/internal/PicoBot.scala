@@ -1,14 +1,75 @@
 package piconot.internal
-package object globalFunctions {
-  def goChangeState(newState : Int, newDir : Direction) = 
-  {
-    
-  }
-}
+import picolib.maze.Maze
+import picolib.semantics._
+
+
+
 case class OurRule (val state : OurState, val cond : Conditions){
-  def -> (actions : String) = 
-  {// parse string to goChangeState
-    actions
+  def charToMoveDirection (s : String) : MoveDirection=
+	{
+    /**
+     * helper function to convert strings such as "S" to the move direction South
+     */
+		var goDirection : MoveDirection  = North;
+    if (s.equals("E"))
+      goDirection = East
+    else if (s.equals("W"))
+      goDirection = West
+    else if (s.equals("S"))
+      goDirection = South
+    goDirection
+	}
+  
+  def -> (actions : String) : Rule = 
+  {
+    // split the string to an array containg ["go", "<N/E/W/S>", "changeState", "<stateNum>"]
+    val actionsArr = actions.split(" +")
+    
+    // sanity check
+    assert(actionsArr(0).equals("go"))
+    assert(actionsArr(2).equals("changeState"))
+    
+    // from the string find the direction we want picobot to move
+    var goDirection : MoveDirection  = StayHere;
+    if (!actionsArr(1).equals("nowhere"))
+      goDirection = charToMoveDirection(actionsArr(1));
+    
+    // do some parsing of the condition to make it a format usable by picobot API
+    // that we were given
+    var north : RelativeDescription = Anything
+    var east : RelativeDescription = Anything
+    var west : RelativeDescription = Anything
+    var south : RelativeDescription = Anything
+    for ( (b, d) <- (cond.blocked zip cond.dir)) {
+      if (d == 'N')
+        if (b)
+          north = Blocked
+        else
+          north = Open
+      else if (d == 'E')
+        if (b)
+          east = Blocked
+        else
+          east = Open
+      else if (d == 'S')
+        if (b)
+          south = Blocked
+        else
+          south = Open
+      else if (d == 'W')
+        if (b)
+          west = Blocked
+        else
+          west = Open
+    }
+
+    // now return the rule we have constructed the information for
+    Rule( 
+      State(state.s.toString), 
+      Surroundings(north, east, west, south), 
+      goDirection, 
+      State(actionsArr(3))
+    )
   }
 }
 
@@ -42,6 +103,6 @@ object PicoBotExtender {
    {
 		 // From a string like 0N~S will convert it to an appropriate OurRule object
 		 // which represents the rule for state 0 when north is free and south is blocked
-     OurRule(OurState(value.charAt(0).toInt), conditionConverterHelp(value.tail, List(), List()))
+     OurRule(OurState(value.charAt(0).toString.toInt), conditionConverterHelp(value.tail, List(), List()))
    }
 }
