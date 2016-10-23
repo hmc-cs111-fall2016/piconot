@@ -15,7 +15,6 @@ object EmptyRoom extends JFXApp {
   val emptyMaze = Maze("resources" + File.separator + "empty.txt")
 
   val rules = List(
-    
     /////////////////////////////////////////////////////////
     // State 0: go West
     /////////////////////////////////////////////////////////

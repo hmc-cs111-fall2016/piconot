@@ -12,8 +12,16 @@ case class StartState(name: String)
 case class StateChunk(name: String, rules: List[Rule])
 
 case class Rule(surroundings: API.Surroundings, 
-                movement: Option[API.MoveDirection],
-                newState: Option[String])
+                movementName: Option[String],
+                newState: Option[String]) {
+  def getMovement = movementName match {
+    case None => API.StayHere
+    case Some("N") => API.North
+    case Some("E") => API.East
+    case Some("W") => API.West
+    case Some("S") => API.South
+  }
+}
 
 case class Surr(walls: String, blanks: String) {
   
