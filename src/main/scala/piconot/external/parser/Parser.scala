@@ -53,7 +53,7 @@ object PicoParser extends JavaTokenParsers with PackratParsers
   lazy val movement: Parser[String] = """(N|E|W|S)""".r 
   
   // state names must be lower case
-  lazy val stateName: Parser[String] = """([0-9]|[a-z]|_)*""".r
+  lazy val stateName: Parser[String] = """([0-9]|[a-z]|_)+""".r
   lazy val comment: Parser[String] = """(//.*)?""".r
 
 }
