@@ -5,6 +5,8 @@ Please see [reflection.md](/reflection.md) for additional comments on our work.
 ## Internal DSL
 - Initially we planned to implement a method called "until", that takes in a surrounding, under the "Go" case class so that the user can say "Go until" <surrounding>. However, as we were writing our internal DSL, we didn't find the until feature as the top priority. So now the user is to write "Go" <surrounding?>, instead. 
 
+- Similarly to the omission of "until", we wrote the internal DSL in such a way that the user is to say "Jump" <label>, instead of "Jump to" <label> for when a picobot has to move to another set of states, defined as a label. 
+
 **On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
 
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
