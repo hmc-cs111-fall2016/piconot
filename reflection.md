@@ -12,8 +12,8 @@ we settled on the design explained in the project and partially implemented.
 Once we moved to the Scala component, we stumbled to figure out the ideal layout
 of the project and starter files. We began working on our AST which included
 several case classes and other objects that fully encapsulated the structure.
-We arrived at something we all agreed would work for our lanaguage. Next,
-we attempted to create the implementation that would take something from our AST
+We arrived at something we all agreed would work for our lanaguage. 
+Next, we attempted to create the implementation that would take something from our AST
 and internal DSL and transform it into the list or rules that are compatible
 with the provided API. While this compiled, the object responsible for
 transforming our AST into the API-compatible representation kept producing null
@@ -34,7 +34,7 @@ as follows:
    step 2.
 5. Create a CLI for the externl DSL.
 
-If we were to complete this project again, we would likely choose a simpler
+If we were to complete this project again, we would likely to choose a simpler
 lanaguge to try to implement since our main stumbling blocks were Scala itself
 and not the languge parsing or representation. Despite our not completing all
 the goals, we believe it was a valuable learning experience nonetheless. All
