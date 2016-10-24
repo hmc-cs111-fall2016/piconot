@@ -38,17 +38,25 @@ class Internal(val mazeFilename: String) extends JFXApp {
 		// (Nothing, Something, Go) to generate params for our ruleBuilder which
 		// would then create a rule to add to our rulesList, which would then be
 		// used when running the program.
-		val somethingInputs = somethingNothingPart.split("(?<=Something\\Q(\\E)(.*)(?=\\Q)\\E)")
-		val nothingInputs = somethingNothingPart.split("(?<=Nothing\\Q(\\E)(.*)(?=\\Q)\\E)")
+		val somethingPattern = "(?<=Something\\Q(\\E)(.*)(?=\\Q)\\E)".r
+		val nothingPattern = "(?<=Nothing\\Q(\\E)(.*)(?=\\Q)\\E)".r
+		var somethingInputs = ""
+		var nothingInputs = ""
+		somethingPattern.findAllIn(somethingNothingPart).matchData foreach {
+			m => somethingInputs = m.group(1)
+		}
+		nothingPattern.findAllIn(somethingNothingPart).matchData foreach {
+			m => nothingInputs = m.group(1)
+		}
 
+		println("somethingInputs: " + somethingInputs)
+		println("nothingInputs: " + nothingInputs)
 		var initSurroundingsList = Array[RelativeDescription](Anything, Anything, Anything, Anything)
 		
 		// Create a Surroundings object for the particular state/set of instructions
-		var nothingList = Nothing(initSurroundingsList)
-		val surroundingsInputs = Something(nothingList)
-
+		var nothingList = Nothing(initSurroundingsList, nothingInputs)
+		val surroundingsInputs = Something(nothingList, somethingInputs)
 		val surroundingsObject = Surroundings(surroundingsInputs(0), surroundingsInputs(1), surroundingsInputs(2), surroundingsInputs(3))
-		
 		var startingState = State("0")
 		if (startDirection == "E") {
 			startingState = State("1")
@@ -66,7 +74,6 @@ class Internal(val mazeFilename: String) extends JFXApp {
 		pattern.findAllIn(goPart).matchData foreach {
 			m => goInput = m.group(1)
 		}
-		println("goInput: "+ goInput(1) + "goInputLength: " + goInput.length)
 		val moveDirection, nextState  = Go(startingState, surroundingsObject, goInput)
 
 		// Create some function to build rules to go into rules
@@ -75,7 +82,7 @@ class Internal(val mazeFilename: String) extends JFXApp {
 	}
 
 
-	def Something(list: Array[RelativeDescription]) = {
+	def Something(list: Array[RelativeDescription], input: String) = {
 		 // 0 = Anything
 		 // 1 = Open
 		 // 2 = Blocked
@@ -96,21 +103,21 @@ class Internal(val mazeFilename: String) extends JFXApp {
     	 dirList
 	}
 
-	def Nothing(list: Array[RelativeDescription]) = {
+	def Nothing(list: Array[RelativeDescription], input: String) = {
 		 // 0 = Anything
 		 // 1 = Open
 		 // 2 = Blocked
 		 var dirList = list
-		 if (list.contains("N")) {
+		 if (input == "N") {
 		 	dirList(0) = Open
 		 }
-		 if (list.contains("E")) {
+		 if (input == "E") {
 		 	dirList(1) = Open
 		 } 
-		 if (list.contains("W")) {
+		 if (input == "W") {
 		 	dirList(2) = Open
 		 }
-		 if (list.contains("S")) {
+		 if (input == "S") {
 		 	dirList(3) = Open
 		 }
     	 dirList
@@ -118,7 +125,9 @@ class Internal(val mazeFilename: String) extends JFXApp {
 
 	def Go(startingState: State, surroundingsObject: Surroundings, direction: String) = {
 	    val program = Internal.this
+	    println("startingState: " + startingState)
 	    println("Direction: " + direction)
+	    println("SurroundingsObject: " + surroundingsObject)
 	    if (direction == "North") {
   		 	val rule = new Rule(startingState, surroundingsObject, North, State("0"))
   		 	program.addRule(rule)
