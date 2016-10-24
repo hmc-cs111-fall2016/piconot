@@ -1,0 +1,83 @@
+List(
+    Label("start"){
+        List(
+            Face(WEST),
+            Go until FRONT_WALL,
+            Face(NORTH),
+            Go until FRONT_WALL,
+            Jump("loop")
+        )
+    }
+    Label("loop"){
+        List (
+            Face(SOUTH),
+            Go until FRONT_WALL,
+            Face(EAST),
+            Go until RIGHT_WALL,
+            Face(NORTH),
+            Go until Front_WALL,
+            Face(WEST),
+            Go until LEFT_WALL,
+            Jump("loop")
+        )
+    }
+)
+
+
+case class program(labels: List[Label]){
+    process(labels) // create initial label map
+    buildRules(labels) // for each element in a label, create a rule
+    run // might need to be like buildRule(labels).run
+
+
+    def process(labels: List[Label]) = 
+    // go through list of labels and give each one a state (go through all the times it says Face... :( )
+
+    def buildRules(labels: List[Label]) = 
+    // for every rule in label, pattern match it to either Face, Go, Jump and do the appropriate thing. 
+}
+
+
+
+OURS:
+List (
+    Label("name") {
+        List (
+            Face(NORTH),
+            Go until FRONT_WALL,
+            Jump("name")
+        )
+    }
+)
+
+YOURS:
+List(
+    Rule( // The face north stays in place and changes state to run the next line
+        State("0"),
+        Surrounding(Anything, Anything, Anything, Anything),
+        StayHere,
+        State("1")
+    )
+    Rule( // Go North (direction we are facing) until I can't anymore
+        State("1"),
+        Surroundings(Open, Anything, Anything, Anything),
+        North,
+        State("1")
+    )
+    Rule ( // If I can't go north anymore, go to the next line 
+           // next line says to jump to state 0 (label "name")
+        State("1"),
+        Surrounding(Blocked, Anything, Anything, Anything), // fall back to all anything
+        StayHere,
+        State("0")
+    )
+)
+
+
+
+Label <name>:
+Face <direction>
+Go until <surrounding>
+Jump <name>
+
+
