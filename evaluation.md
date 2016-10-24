@@ -7,7 +7,8 @@ Please see [reflection.md](/reflection.md) for additional comments on our work.
 
 - Similarly to the omission of "until", we wrote the internal DSL in such a way that the user is to say "Jump" <label>, instead of "Jump to" <label> for when a picobot has to move to another set of states, defined as a label. 
 
-**On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
+**On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax? 
+3. Our ideal syntax isn't too different from the internal DSL we wrote. The main features such as going to a certain surrounding, jumping from a label to the other, and facing a specific direction remain the same. 
 
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
 
