@@ -29,8 +29,18 @@ Now, strings have to be passed in to the main function `If`. The readability is
 definitely hurt since we moved the `North` header into a parameter for `If`. 
 The initial syntax made it very easy to read which rules are relevant
 to certain movement directions, and that is a bit lost since we are now passing
-in the direction into `If`. 
+in the direction into `If`.  
 
+Passing strings in caused us major issues. We had to parse out the input to each
+of the "functions" in the strings (Nothing, something, go), and we did so using 
+regular expressions. Much of the time spent on this was dealing with Regex and
+perfecting it to ensure it worked for all our cases.  We got very close but still
+run into cases where it may mess up for the right hand rule.
+
+As you may gather, the syntax has changed pretty drastically from our ideal case.
+The only part that has really remained structurally is `If` still being present.
+Instead of clean function calls, we pass in strings, and the modularized states
+by direction is no longer a feature of the DSL.  
 
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
 Probably around a 9. Currently we're having a bunch of trouble really making it fit 
@@ -46,8 +56,9 @@ One of the biggest issues we had to deal with is the fact that we had to take
 in strings as our parameters for our `If` function, in order to be able to 
 control the order that `Nothing`, `Something`, and `Go` were called in. We used
 regex to parse out the input for these, but it seems we weren't able to perfect
-it even at this point. As a result, we could not provide the proper values needed 
-in some cases and it can cause our right hand rule to mess up.
+it even at this point. As a result, we could not provide the proper values 
+for surroundings to be generated properly in some cases, and it can cause our
+right hand rule to mess up at times.
 
 ## External DSL
 
