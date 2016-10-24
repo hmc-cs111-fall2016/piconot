@@ -1,5 +1,7 @@
 # Evaluation: running commentary
 
+Please see [reflection.md](/reflection.md) for additional comments on our work.
+
 ## Internal DSL
 
 _Describe each change from your ideal syntax to the syntax you implemented, and
