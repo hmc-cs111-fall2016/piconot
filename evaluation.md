@@ -77,6 +77,27 @@ added walls to the environment first in an if/else block.
 _Describe each change from your ideal syntax to the syntax you implemented, and
 describe_ why _you made the change._
 
+The only things we changed were adding semicolons as delimiters at the end
+of each rule and requiring state names to be lowercase.  Both of these changes
+were due to whitespace.
+
+If we can specify a move direction, a new state, **or both**, the parser would
+get confused when a rule ends with only a newline, semicolons fixed this issue.
+
+We also ran into an ambiguity in which `E` could either be a state name or the
+cardinal direction to move.  We resolved this ambiguity by outlawing capital
+letter for state names.
+
 **On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
 
+We changed our syntax roughly 1.  The structure of our code was preserved.
+We had to make the second choice because of something we hadn't considered
+in design, rather than a compromise because we couldn't get the parser to work.
+
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
+
+We think the difficulty was somewhere between a 6 and a 7.  Once we understood
+the structure of PackratParser's lazy evaluations, the parsing was fairly
+straightforward.  Figuring out how to test effectively was challenging and
+writing the tests was a cumbersome process.
+
