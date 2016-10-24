@@ -49,23 +49,22 @@ more nesting levels). "Ain't nobody got time for that" ~Tiff
 _Describe each change from your ideal syntax to the syntax you implemented, and
 describe_ why _you made the change._
 
+We did not change much this time.
+We added the ability to say `while (any)` to try to implement the RightHand Picobot so that, if we could, we would not have to restrict it 
+to being chronological.
 
+We did not implement a lot of nested while loops, specifically while loops with only one other while loop in it because we ran out of our 
+time budget and it would have been rather difficult to find all the unmatched states and make filler states for them, as we did for the 
+exit rule of the outermost while loop.
 
-
-
+Although we did not have the time to implement RightHand, we realized that if we did have the time, we would be forced to implement `while 
+(moving E)` which would go into the while loop if we had just moved east to get to our current position.
 
 **On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
-
-
-
-
-
-
+2. We made some minor changes, but most of those would have been required to implement RightHand anyways and were not that major of a 
+change from the ideal syntax (they at least had the structure of `while (cond) body`.
 
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
-
-
-
-
-
-
+6. We had to be able to create our own intermediate representation, which was a list of list of rules to be able to implement while loops 
+as we wanted. This made it slightly difficult and made Empty take more time than it may have otherwise taken. However, this was much 
+easier than implementing the internal DSL. Prof Ben was right.
