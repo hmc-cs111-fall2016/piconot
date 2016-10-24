@@ -1,6 +1,8 @@
 package piconot.internal 
 
-object Empty extends Internal("resources/empty.txt") {
+import scala.language.postfixOps
+
+object EmptyBot extends Internal("empty.txt") {
   If ("N", "Nothing(N)","Go(North)")
   If ("N", "Something(N) and Nothing(W)", "Go(West)")
   If ("N", "Something(N, W)", "Go(East)")
@@ -10,5 +12,5 @@ object Empty extends Internal("resources/empty.txt") {
   If ("S", "Something(S)", "Go(North)")
   If ("E", "Nothing(E)", "Go(East)")
   If ("E", "Something(E)", "Go(South)")
-  run
+  run()
 }

@@ -13,3 +13,5 @@ libraryDependencies ++=
        "org.scala-lang" % "scala-compiler" % scalaVersion.value )
 
 unmanagedClasspath in (Compile, runMain) += baseDirectory.value / "resources"
+
+logBuffered in Test := false

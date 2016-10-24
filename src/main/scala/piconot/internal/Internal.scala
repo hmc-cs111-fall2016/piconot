@@ -5,7 +5,7 @@ import picolib.maze.Maze
 import picolib.semantics._
 import scala.collection.mutable.MutableList
 import scalafx.application.JFXApp
-
+import java.io.File
 
 // Internal syntax: 
 // If ("N", "Nothing(N)","Go(North)")
@@ -25,7 +25,7 @@ import scalafx.application.JFXApp
 // in something else.
 
 
-class Internal(val mazeFilename: String) extends App {
+class Internal(val mazeFilename: String) extends JFXApp {
 	private val rules = MutableList.empty[Rule]
 
 	// Create objects North West South East which would be first params
@@ -60,9 +60,14 @@ class Internal(val mazeFilename: String) extends App {
 			startingState = State("3")
 		}
 
-		// Create the output values	
-		val goInput = goPart.split("Go\\Q(\\E(.*)(?=\\Q)\\E)")
-		val moveDirection, nextState  = Go(startingState, surroundingsObject, goInput(0))
+		// Create the output values
+		val pattern = "Go\\Q(\\E(.*)(?=\\Q)\\E)".r	
+		var goInput = ""
+		pattern.findAllIn(goPart).matchData foreach {
+			m => goInput = m.group(1)
+		}
+		println("goInput: "+ goInput(1) + "goInputLength: " + goInput.length)
+		val moveDirection, nextState  = Go(startingState, surroundingsObject, goInput)
 
 		// Create some function to build rules to go into rules
 		// val rule = new RuleBuilder(startingState, surroundingsObject)
@@ -113,6 +118,7 @@ class Internal(val mazeFilename: String) extends App {
 
 	def Go(startingState: State, surroundingsObject: Surroundings, direction: String) = {
 	    val program = Internal.this
+	    println("Direction: " + direction)
 	    if (direction == "North") {
   		 	val rule = new Rule(startingState, surroundingsObject, North, State("0"))
   		 	program.addRule(rule)
@@ -133,21 +139,14 @@ class Internal(val mazeFilename: String) extends App {
   		}	    
 	}
   
-	// a class to build a rule from its parts and add the rule to the running
-	// list of rules
-	// class RuleBuilder(val startState: State, val surroundings: Surroundings) {
-	//   val program = Internal.this
-	//   val rule = new Rule(startState, surroundings, moveDirection, nextState)
-
-	// }
-
   	def addRule(rule: Rule) = rules += rule
   
 	def run() = {
-      val maze = Maze(mazeFilename)
-      val picobot = 
-        new Picobot(maze, rules.toList) with TextDisplay with GUIDisplay
+	  println("The number of rules in the list: " + rules.length)
+	  Console.out.flush
+      val maze = Maze("resources" + File.separator + mazeFilename)
+      val picobot = new Picobot(maze, rules.toList) with TextDisplay with GUIDisplay
       stage = picobot.mainStage
       picobot.run()
   	}
-}  
+} 
