@@ -1,0 +1,25 @@
+while (free W) {
+	move W
+}
+
+while (free N) {
+	move N
+}
+
+ while (free E) {
+	while (free S) {
+		move S
+	}
+
+	move E
+
+	while (free N) {
+		move N
+	}
+
+	move E
+}
+
+while (free S) {
+    move S
+}
