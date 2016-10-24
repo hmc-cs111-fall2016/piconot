@@ -10,7 +10,10 @@ import PiconotTypes._
 object PiconotParser extends JavaTokenParsers with PackratParsers with RegexParsers {
 
   // parsing interface
-  def apply(s: String): ParseResult[Seq[State]] = parseAll(program, s)
+  def apply(s: String): ParseResult[Seq[State]] = {
+    val noComments = s.replaceAll("#.*(\n|$)", " ")
+    parseAll(program, noComments)
+  }
 
   // a program is a sequence of states
   val program: PackratParser[Seq[State]] =

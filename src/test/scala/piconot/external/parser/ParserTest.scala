@@ -111,4 +111,10 @@ class ParserSuite extends FunSuite with Matchers {
     badRuleTest("next_state, next_next_state")
   }
 
+  test("comments") {
+    "state state1 # This comment will be ignored\n" +
+    "  | move forward # So will this one" ->
+    (Seq(State( "state1",
+      Seq( rule(Move(Forward))))))
+  }
 }
