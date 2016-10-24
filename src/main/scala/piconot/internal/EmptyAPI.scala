@@ -1,4 +1,4 @@
-package piconot.internal
+package piconot.example.internal
 
 import java.io.File
 import scalafx.application.JFXApp

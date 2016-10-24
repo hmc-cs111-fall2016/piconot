@@ -1,0 +1,15 @@
+# Bot to solve an empty room
+# Can also be done with cardinal directions
+
+state move_up
+    | move forward
+    | move right, face backward, move_down
+    | face left, move_left
+
+state move_down
+    | move forward
+    | face backward, move_up
+
+state move_left
+    | move forward
+    | face left, move_down
