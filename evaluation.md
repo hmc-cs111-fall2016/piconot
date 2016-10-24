@@ -33,14 +33,22 @@ in the direction into `If`.
 
 
 **On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
-Probably around a 7. Currently having a bunch of trouble really making it fit 
+Probably around a 9. Currently we're having a bunch of trouble really making it fit 
 with the API. We use strings for the states because we take in start and next 
 states as directions rather than numbers.  Furthermore, we don't ask users for
 a full set of surroundings for each rule.  Rather, they only specify if there 
 is a rule that they specifically need.  For example, while the original syntax
 would take in something like "N***", specifying each direction's status, ours
 would be only "Something(N)", which requires us to go through more work to
-conform to the API.   
+conform to the API.  
+
+One of the biggest issues we had to deal with is the fact that we had to take
+in strings as our parameters for our `If` function, in order to be able to 
+control the order that `Nothing`, `Something`, and `Go` were called in. We used
+regex to parse out the input for these, but it seems we weren't able to perfect
+it even at this point. As a result, we could not provide the proper values needed 
+in some cases and it can cause our right hand rule to mess up.
+
 ## External DSL
 
 _Describe each change from your ideal syntax to the syntax you implemented, and
