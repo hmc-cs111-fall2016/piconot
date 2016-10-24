@@ -1,3 +1,5 @@
+# Can also be done with cardinal directions
+
 state move_up
     | move forward
     | move right, face backward, move_down
