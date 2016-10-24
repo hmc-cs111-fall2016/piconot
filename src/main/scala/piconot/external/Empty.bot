@@ -1,16 +1,11 @@
 // A Picobot program that can fill an empty room
 
 0(W)[]:W*	// go all the way to the left
-0()[W]:_	// can't go left anymore, so try to go up
-
+0()[W]:_+	// can't go left anymore, so try to go up
 1(N):N*	// go all the way to the top
-1[N]:S	// can't go up any more, so try to go down
-
+1[N]:S+	// can't go up any more, so try to go down
 2(S):S*	// go all the way to the bottom
-2[S]:E	// can't go down anymore, so try to go right
-
+2[S]:E+	// can't go down anymore, so try to go right
 3(N):N*	// go all the way to the top
 3[N]:E -1	// can't go up anymore, so try to go right
 		// then go back 1 state
-
-
