@@ -1,0 +1,14 @@
+# corner
+n_sweep_move_w {
+  N_ -> N;  // move north when there's not a wall
+  N! -> W s_sweep;
+}
+s_sweep {
+  S_ -> S;
+  S! -> n_sweep_move_w;
+}
+corner {
+  E_ -> E;
+  E! S_ -> S;
+  ES! -> n_sweep_move_w;  
+}

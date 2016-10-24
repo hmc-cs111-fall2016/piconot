@@ -1,0 +1,23 @@
+// traverses a maze using the right-hand rule
+#face_north
+
+face_north {
+  E! N_ -> N;
+  E_    -> E face_east;
+  EN!   ->   face_west; 
+}
+face_east {
+  E_ S! -> E; 
+  S_    -> S face_south;
+  ES!   ->   face_north;
+}
+face_south {
+  W! S_ -> S;
+  W_    -> W face_west;
+  WS!   ->   face_east;  
+}
+face_west {
+  N! W_ -> W;
+  N_    -> N face_north;
+  NW!   ->   face_south;  
+}
