@@ -1,0 +1,25 @@
+// The tilde means if we are blocked in that direction
+state 0 {
+	S -> go S
+	~S -> changeState 1
+}
+
+state 1 {
+	W -> go W
+	else -> changeState 2
+}
+
+state 2 {
+	N -> go N
+	else -> go E && changeState 3	
+}
+
+state 3 {
+	S -> go S
+	else -> go E && changeState 2
+}
+
+
+For the internal we compromised the design to make it a little simpler so rules
+will be written like this:
+"0N~S" -> "go S changeState 1"

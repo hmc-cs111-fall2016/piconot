@@ -2,6 +2,7 @@
 // but in order to ease the setup for the training we put the following here:
 
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.5.2")
+
 addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "4.0.0")
 
 //lazy val root = (project in file(".")).dependsOn(picolib)
