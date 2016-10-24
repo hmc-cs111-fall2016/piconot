@@ -5,6 +5,7 @@
 _Describe each change from your ideal syntax to the syntax you implemented, and
 describe_ why _you made the change._
 
+**On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
 In the internal DSL we changed from specifying all rules for one state to specifying
 the state explicitely for each rule.  I think this is a change of size 4 because
 while we do lose a little bit of the flavor of out language since a little more
@@ -21,6 +22,8 @@ fairly natural language feel to say go somewhere changeState some number.
 Additionally we allow the user to say go nowhere, which further feels fairly
 natural to say.
 
+**On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
+
 After making these changes it was about a 5 to map our syntax to the provided API.
 Our syntax collects all the necessary information and then some amount of processing
 of our input is necessary to convert it to a format that is usable to the provided
@@ -28,9 +31,7 @@ API.  This conversion is a bit annoying and requires a number of if statements,
 but is not overly difficult.  Therefor I think a 5 makes sense because it wasn't
 really difficult to make the change, but it was a little tedious.
 
-**On a scale of 1–10 (where 10 is "a lot"), how much did you have to change your syntax?**
 
-**On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map your syntax to the provided API?**
 
 ## External DSL
 
