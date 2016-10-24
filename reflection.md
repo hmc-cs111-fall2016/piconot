@@ -13,11 +13,13 @@ Once we moved to the Scala component, we stumbled to figure out the ideal layout
 of the project and starter files. We began working on our AST which included
 several case classes and other objects that fully encapsulated the structure.
 We arrived at something we all agreed would work for our lanaguage. 
+
 Next, we attempted to create the implementation that would take something from our AST
 and internal DSL and transform it into the list or rules that are compatible
 with the provided API. While this compiled, the object responsible for
 transforming our AST into the API-compatible representation kept producing null
-pointer errors. The instance variables, despite being initialized, kept being
+pointer errors. The instance variables, such as the default direction that the picobot
+is facing and the map that maps states to labels, despite being initialized, kept being
 null; upon further investigation, we could not resolve the error. We composed a
 basic example with one class and mimiced how we were using it and did not get
 the error, but for some reason the way we were using it in the actual project
