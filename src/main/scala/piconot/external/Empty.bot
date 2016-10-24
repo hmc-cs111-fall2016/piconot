@@ -1,0 +1,11 @@
+0:~W  -> go W;
+0:W   -> changeState 1;
+
+1:~N  -> go N;
+1:N~S -> changeState 2;
+
+2:~S  -> go S;
+2:~ES -> go E changeState 3;
+
+3:~N  -> go N;
+3:N~E -> go E changeState 2;

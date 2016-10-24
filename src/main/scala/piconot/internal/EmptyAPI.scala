@@ -13,7 +13,7 @@ import picolib.semantics._
 
 object EmptyRoom extends JFXApp {
   val emptyMaze = Maze("resources" + File.separator + "empty.txt")
-
+ 
   val rules = List(
     
     /////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ object EmptyRoom extends JFXApp {
       Surroundings(Anything, Open, Anything, Blocked), 
       East, 
       State("3")
-    ),
+    ), 
 
     // State 3: fill this column from South to North
     Rule( 
