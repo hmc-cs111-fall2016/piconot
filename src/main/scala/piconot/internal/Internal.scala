@@ -87,16 +87,16 @@ class Internal(val mazeFilename: String) extends JFXApp {
 		 // 1 = Open
 		 // 2 = Blocked
 		 var dirList = list
-		 if (list.contains("N")) {
+		 if (input == "N") {
 		 	dirList(0) = Blocked
 		 }
-		 if (list.contains("E")) {
+		 if (input == "E") {
 		 	dirList(1) = Blocked
 		 } 
-		 if (list.contains("W")) {
+		 if (input == "W") {
 		 	dirList(2) = Blocked
 		 }
-		 if (list.contains("S")) {
+		 if (input == "S") {
 		 	dirList(3) = Blocked
 		 }
 
