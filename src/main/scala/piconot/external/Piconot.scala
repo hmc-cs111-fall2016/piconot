@@ -1,8 +1,8 @@
 package piconot.external
+
 import scalafx.application.JFXApp
 import java.io.File
 import picolib.maze.Maze
-import picolib.semantics._
 import piconot.external.parser._
 
 object Piconot {
