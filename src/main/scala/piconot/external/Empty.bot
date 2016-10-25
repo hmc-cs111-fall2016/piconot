@@ -1,0 +1,10 @@
+
+  North If ("Nothing(N), Go North")
+  North If ("Something(N) and Nothing(W), Go West")
+  North If ("Something(N W), Go East")
+  West If ("Nothing(S), Go South")
+  West If ("Nothing(S), Go South")
+  South If ("Nothing(S), Go South")
+  South If ("Something(S), Go North")
+  East If ("Nothing(E), Go East")
+  East If ("Something(E), Go South")
