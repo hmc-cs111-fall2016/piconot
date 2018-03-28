@@ -12,7 +12,7 @@ import picolib.semantics._
    *       pattern ::= ndirection edirection wdirection sdirection
    *    ndirection ::= "N" | odirection
    *    edirection ::= "E" | odirection
-   *    wdirection ::= "N" | odirection
+   *    wdirection ::= "W" | odirection
    *    sdirection ::= "S" | odirection
    *    odirection ::= "*" | "x" 
    *     direction ::= "N" | "E" | "W" | "S" | "x"
